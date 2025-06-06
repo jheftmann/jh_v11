@@ -7,10 +7,9 @@
 
 :root {
   --color-background: #fff;
-  --color-primary-dark: #111;
-  --color-text-gray: #555;
-  --color-text-black: #000;
+  --color-text-gray: #8E8E8E;
   --color-text-light-gray: #D5D5D5;
+  --color-true-black: #000000;
 
   --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
   --font-size-base: 32px;
@@ -27,7 +26,7 @@
 body {
   font-family: var(--font-family-primary);
   background: var(--color-background);
-  color: var(--color-primary-dark);
+  color: var(--color-true-black);
   min-height: 100vh;
   margin: var(--spacing-none);
   font-size: var(--font-size-base);
@@ -72,7 +71,7 @@ body {
 }
 
 .text-black {
-  color: var(--color-text-black);
+  color: var(--color-true-black);
 }
 
 .text-left {
@@ -120,13 +119,13 @@ body {
 /* Component specific */
 .nav-home {
   font-size: var(--font-size-large);
-  color: var(--color-text-black);
+  color: var(--color-true-black);
   margin-top: auto;
 }
 
 .nav-info {
   font-size: var(--font-size-large);
-  color: var(--color-text-black);
+  color: var(--color-true-black);
   align-self: flex-start;
   margin-top: auto;
 }
@@ -163,19 +162,19 @@ body {
 
 /* Links */
 .expandable-section .content a {
-  color: var(--color-primary-dark);
+  color: var(--color-true-black);
   text-decoration: underline;
   cursor: pointer;
 }
 
 .expand-link:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-true-black);
 }
 
 .expandable-section .content:last-of-type a {
-  color: var(--color-text-black);
+  color: var(--color-true-black);
 }
 
 .is-old-paragraph .expand-link:hover {
-  color: var(--color-text-black);
+  color: var(--color-true-black);
 } 
