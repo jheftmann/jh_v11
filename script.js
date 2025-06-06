@@ -25,14 +25,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Function to manage the section state (open/closed, trigger number, and is-open class)
+  function setSectionOpenState(section, isOpen) {
+      console.log(`setSectionOpenState called for section: ${section.querySelector('.trigger').textContent.trim()}, isOpen: ${isOpen}`);
+      const firstContent = section.querySelector('.content:not(.sub-content)');
+      if (!firstContent) {
+        console.log('setSectionOpenState: No first content found.');
+        return;
+      }
+
+      if (isOpen) {
+          firstContent.hidden = false;
+          section.classList.add('is-open');
+          console.log(`setSectionOpenState: Added is-open class. Current classes: ${section.classList}`);
+      } else {
+          firstContent.hidden = true;
+          firstContent.innerHTML = ''; // Clear content when hiding
+          section.classList.remove('is-open');
+          console.log(`setSectionOpenState: Removed is-open class. Current classes: ${section.classList}`);
+
+          // Also hide any sub-content and reset styles in the section being closed
+          section.querySelectorAll('.content.sub-content').forEach(subContent => {
+              subContent.hidden = true;
+              subContent.innerHTML = '';
+          });
+          section.querySelectorAll('.content').forEach(contentBlock => {
+               contentBlock.style.color = '';
+               contentBlock.classList.remove('is-old-paragraph');
+               contentBlock.querySelectorAll('a').forEach(link => {
+                   link.style.color = '';
+               });
+          });
+      }
+      console.log('setSectionOpenState finished.');
+  }
+
     // If in test mode, show the first content span for each section immediately
     if (testMode) {
+        console.log('Test mode is ENABLED.');
         document.querySelectorAll('.expandable-section').forEach(section => {
-            const firstContent = section.querySelector('.content');
-            if (firstContent) {
-                firstContent.hidden = false;
-            }
+            // In test mode, set the initial state to open
+            setSectionOpenState(section, true);
+             // The test mode logic for expanding subsequent sections is handled in the click delegate
         });
+    } else {
+         console.log('Test mode is DISABLED.');
     }
 
   // Function to handle the typing animation
@@ -70,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Handle all expandable sections (initial click on trigger)
   document.querySelectorAll('.expandable-section').forEach(section => {
+    console.log('Processing expandable section...');
     const trigger = section.querySelector('.trigger');
     const firstContentElement = section.querySelector('.content:not(.sub-content)'); // Target the first content span
 
@@ -80,48 +118,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle initial click to expand
     trigger.addEventListener('click', function() {
+      console.log(`Trigger clicked for section: ${section.querySelector('.trigger').textContent.trim()}`);
       // Before expanding, hide any other open sections
       document.querySelectorAll('.expandable-section').forEach(otherSection => {
-        if (otherSection !== section) { // Don't hide the currently clicked section
-          const otherContent = otherSection.querySelector('.content:not(.sub-content)');
-          if (otherContent && !otherContent.hidden) {
-            otherContent.hidden = true;
-            otherContent.innerHTML = ''; // Clear content when hiding
-
-            // Also hide any sub-content in the other section
-            otherSection.querySelectorAll('.content.sub-content').forEach(subContent => {
-                subContent.hidden = true;
-                subContent.innerHTML = ''; // Clear content when hiding
-            });
-
-            // Reset color and class for the previously open content blocks in the other section
-            otherSection.querySelectorAll('.content').forEach(contentBlock => {
-                 contentBlock.style.color = ''; // Remove inline color
-                 contentBlock.classList.remove('is-old-paragraph'); // Remove class
-                 // Reset link colors within this block if they were changed
-                 contentBlock.querySelectorAll('a').forEach(link => {
-                     link.style.color = ''; // Remove inline color
-                 });
-            });
-          }
+        if (otherSection !== section) { // Don't close the clicked section on initial pass
+           // Check if the other section is open before closing it
+           if (otherSection.classList.contains('is-open')) {
+             console.log(`Closing other section: ${otherSection.querySelector('.trigger').textContent.trim()}`);
+             setSectionOpenState(otherSection, false); // Close the other section
+           }
         }
       });
 
-      // Only animate if not in test mode AND content is hidden
+      // Toggle the state of the clicked section
+      // Only toggle if not in test mode OR if the section is currently hidden in test mode
+      // In test mode, clicking an open section should close it.
       if (!testMode && firstContentElement.hidden) {
-        typeWriter(firstContentElement, plainTextContent, function() {
-            firstContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
-        });
+          console.log('Click handler: Opening section with animation.');
+          // Normal opening with animation
+          setSectionOpenState(section, true);
+          // We need to handle the typing animation after setting state to open visually
+          // Temporarily clear content for typing animation AFTER setting state to open
+          firstContentElement.innerHTML = ''; // Clear for typing
+          typeWriter(firstContentElement, plainTextContent, function() {
+              firstContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
+              console.log(`Typing animation finished for section: ${section.querySelector('.trigger').textContent.trim()}`);
+          });
+
       } else if (testMode) {
-        // In test mode, just toggle visibility of the first content element
-        firstContentElement.hidden = !firstContentElement.hidden;
-        if (!firstContentElement.hidden) {
-             firstContentElement.innerHTML = fullHTMLContent;
-        } else {
-             firstContentElement.innerHTML = '';
-        }
+           console.log('Click handler: Toggling section in test mode.');
+           // In test mode, clicking toggles the state
+           setSectionOpenState(section, firstContentElement.hidden); // Toggle based on current hidden state
+           // If opening in test mode, restore content immediately
+           if (!firstContentElement.hidden) {
+                firstContentElement.innerHTML = fullHTMLContent;
+           }
+      } else if (!firstContentElement.hidden) {
+          console.log('Click handler: Closing already open section.');
+          // If not in test mode and clicking an open section, close it
+           setSectionOpenState(section, false);
       }
+      console.log('Click handler finished.');
     });
+
+    // The hover effect is now handled purely by CSS.
+
   });
 
   // Re-delegate click handling for expand links on the whole document
@@ -167,11 +208,13 @@ document.addEventListener('DOMContentLoaded', function() {
                      nextContentElement.hidden = true; // Ensure hidden initially for animation
                      typeWriter(nextContentElement, plainTextContent, function() {
                         nextContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
+                        // No need to add is-open here, it's for the main section trigger.
                      });
                 } else {
                     // In test mode, show immediately and set content
                     nextContentElement.hidden = false;
                     nextContentElement.innerHTML = fullHTMLContent;
+                    // No need to add is-open here, it's for the main section trigger.
                 }
 
                 // --- Change color of the current paragraph and its links to lighter gray and add class ---
