@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'ABCDiatype Medium';
+  src: url('_assets/ABCDiatype-Medium-Trial.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --color-background: #fff;
   --color-primary-dark: #111;
@@ -5,7 +12,7 @@
   --color-text-black: #000;
   --color-text-light-gray: #D5D5D5;
 
-  --font-family-primary: Arial, sans-serif;
+  --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
   --font-size-base: 32px;
   --font-size-large: 2rem;
 
@@ -13,6 +20,8 @@
   --spacing-double: 40px;
   --spacing-indent: 1.5em;
   --spacing-none: 0;
+
+  --letter-spacing-tight: -.025em;
 }
 
 body {
@@ -23,6 +32,7 @@ body {
   margin: var(--spacing-none);
   font-size: var(--font-size-base);
   line-height: 110%;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 /* Layout */
@@ -54,6 +64,7 @@ body {
 .text-large {
   font-size: var(--font-size-large);
   line-height: 100%;
+  text-box: trim-both cap alphabetic;
 }
 
 .text-gray {
