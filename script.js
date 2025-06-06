@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Test Mode Toggle ---
   // Set to true to disable animations and show all content immediately for styling.
   // Set to false for normal behavior.
-  const testMode = true;
+  const testMode = false;
   // ------------------------
 
   // Store original HTML content for all .content sections from the HTML
@@ -80,6 +80,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle initial click to expand
     trigger.addEventListener('click', function() {
+      // Before expanding, hide any other open sections
+      document.querySelectorAll('.expandable-section').forEach(otherSection => {
+        if (otherSection !== section) { // Don't hide the currently clicked section
+          const otherContent = otherSection.querySelector('.content:not(.sub-content)');
+          if (otherContent && !otherContent.hidden) {
+            otherContent.hidden = true;
+            otherContent.innerHTML = ''; // Clear content when hiding
+
+            // Also hide any sub-content in the other section
+            otherSection.querySelectorAll('.content.sub-content').forEach(subContent => {
+                subContent.hidden = true;
+                subContent.innerHTML = ''; // Clear content when hiding
+            });
+
+            // Reset color and class for the previously open content blocks in the other section
+            otherSection.querySelectorAll('.content').forEach(contentBlock => {
+                 contentBlock.style.color = ''; // Remove inline color
+                 contentBlock.classList.remove('is-old-paragraph'); // Remove class
+                 // Reset link colors within this block if they were changed
+                 contentBlock.querySelectorAll('a').forEach(link => {
+                     link.style.color = ''; // Remove inline color
+                 });
+            });
+          }
+        }
+      });
+
       // Only animate if not in test mode AND content is hidden
       if (!testMode && firstContentElement.hidden) {
         typeWriter(firstContentElement, plainTextContent, function() {
@@ -140,12 +167,21 @@ document.addEventListener('DOMContentLoaded', function() {
                      nextContentElement.hidden = true; // Ensure hidden initially for animation
                      typeWriter(nextContentElement, plainTextContent, function() {
                         nextContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
-                    });
+                     });
                 } else {
                     // In test mode, show immediately and set content
                     nextContentElement.hidden = false;
                     nextContentElement.innerHTML = fullHTMLContent;
                 }
+
+                // --- Change color of the current paragraph and its links to lighter gray and add class ---
+                currentContentBlock.style.color = '#D5D5D5';
+                currentContentBlock.classList.add('is-old-paragraph');
+                const currentContentLinks = currentContentBlock.querySelectorAll('a');
+                currentContentLinks.forEach(link => {
+                    link.style.color = '#D5D5D5';
+                });
+                // ------------------------------------------------------------------------
             }
         }
 
