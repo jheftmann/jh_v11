@@ -1,15 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Site loaded and ready!');
 
-  // Store original HTML content for each section from the HTML
-  document.querySelectorAll('.expandable-section').forEach(section => {
-    const content = section.querySelector('.content');
-    // Store original HTML content in a data attribute
-    section.dataset.fullHtml = content.innerHTML;
-    // Clear initial content in HTML and ensure it's hidden
-    content.innerHTML = '';
-    content.hidden = true;
+  // --- Test Mode Toggle ---
+  // Set to true to disable animations and show all content immediately for styling.
+  // Set to false for normal behavior.
+  const testMode = true;
+  // ------------------------
+
+  // Store original HTML content for all .content sections from the HTML
+  document.querySelectorAll('.expandable-section .content').forEach(content => {
+    // Store original HTML content in a data attribute on the content element itself
+    content.dataset.fullHtml = content.innerHTML;
+
+    // Clear initial content in HTML and ensure it's hidden ONLY if not in test mode
+    // The *first* content span within a section is shown by clicking the trigger.
+    // Subsequent .content spans are hidden until their preceding link is clicked.
+    // So, hide all content spans initially unless in test mode.
+    if (!testMode) {
+        content.innerHTML = '';
+        content.hidden = true;
+    } else {
+        // If in test mode, ensure content is visible immediately
+        content.hidden = false;
+    }
   });
+
+    // If in test mode, show the first content span for each section immediately
+    if (testMode) {
+        document.querySelectorAll('.expandable-section').forEach(section => {
+            const firstContent = section.querySelector('.content');
+            if (firstContent) {
+                firstContent.hidden = false;
+            }
+        });
+    }
 
   // Function to handle the typing animation
   // Takes element, plain text to type, and a callback for completion
@@ -44,20 +68,31 @@ document.addEventListener('DOMContentLoaded', function() {
       return div.textContent || '';
   }
 
-  // Handle all expandable sections
+  // Handle all expandable sections (initial click on trigger)
   document.querySelectorAll('.expandable-section').forEach(section => {
     const trigger = section.querySelector('.trigger');
-    const contentElement = section.querySelector('.content');
-    const fullHTMLContent = section.dataset.fullHtml; // Get stored full HTML from data attribute
+    const firstContentElement = section.querySelector('.content:not(.sub-content)'); // Target the first content span
+
+    if (!firstContentElement) return; // Should not happen if structure is correct
+
+    const fullHTMLContent = firstContentElement.dataset.fullHtml; // Get stored full HTML from data attribute
     const plainTextContent = getPlainText(fullHTMLContent);
 
     // Handle initial click to expand
     trigger.addEventListener('click', function() {
-      if (contentElement.hidden) {
-        // Animate plain text, then insert full HTML
-        typeWriter(contentElement, plainTextContent, function() {
-            contentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
+      // Only animate if not in test mode AND content is hidden
+      if (!testMode && firstContentElement.hidden) {
+        typeWriter(firstContentElement, plainTextContent, function() {
+            firstContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
         });
+      } else if (testMode) {
+        // In test mode, just toggle visibility of the first content element
+        firstContentElement.hidden = !firstContentElement.hidden;
+        if (!firstContentElement.hidden) {
+             firstContentElement.innerHTML = fullHTMLContent;
+        } else {
+             firstContentElement.innerHTML = '';
+        }
       }
     });
   });
@@ -66,30 +101,54 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('click', function(e) {
     if (e.target.classList.contains('expand-link')) {
       const href = e.target.getAttribute('href');
-      
+
       // ONLY prevent default if the href is #. Allow normal link behavior otherwise.
       if (href === '#') {
         e.preventDefault();
-        const section = e.target.closest('.expandable-section');
 
-        // Example of adding new content dynamically
-        const newContentHTML = ' This is additional content that could be loaded dynamically... <a href="#" class="expand-link">Another link</a>'; // Define new content HTML
-        const newContentElement = document.createElement('span');
-        newContentElement.className = 'content';
-        
-        // Store full HTML on the new element
-        newContentElement.dataset.fullHtml = newContentHTML;
+        // Find the parent content block of the clicked link
+        const currentContentBlock = e.target.closest('.content');
+        if (!currentContentBlock) return; // Should not happen
 
-        // Append the new element immediately (hidden)
-        section.appendChild(newContentElement);
-        newContentElement.hidden = true; // Ensure it's hidden initially
+        // Find the parent expandable section
+        const parentExpandableSection = currentContentBlock.closest('.expandable-section');
+        if (!parentExpandableSection) return; // Should not happen
 
-        const newPlainText = getPlainText(newContentHTML); // Get plain text for animation
+        // Get all content elements within this section
+        const allContentElementsInSection = parentExpandableSection.querySelectorAll('.content');
 
-        // Animate new content plain text, then insert full HTML
-        typeWriter(newContentElement, newPlainText, function() {
-            newContentElement.innerHTML = newContentHTML; // Insert full HTML after typing
-        });
+        // Find the index of the current content block in the list
+        let currentIndex = -1;
+        for (let i = 0; i < allContentElementsInSection.length; i++) {
+            if (allContentElementsInSection[i] === currentContentBlock) {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        // If the current content block was found and there is a next one
+        if (currentIndex !== -1 && currentIndex + 1 < allContentElementsInSection.length) {
+            const nextContentElement = allContentElementsInSection[currentIndex + 1];
+
+            // If a next hidden content element is found
+            if (nextContentElement && nextContentElement.hidden) {
+                 const fullHTMLContent = nextContentElement.dataset.fullHtml; // Get stored full HTML
+                 const plainTextContent = getPlainText(fullHTMLContent);
+
+                // Animate new content plain text, then insert full HTML ONLY if not in test mode
+                if (!testMode) {
+                     nextContentElement.hidden = true; // Ensure hidden initially for animation
+                     typeWriter(nextContentElement, plainTextContent, function() {
+                        nextContentElement.innerHTML = fullHTMLContent; // Insert full HTML after typing
+                    });
+                } else {
+                    // In test mode, show immediately and set content
+                    nextContentElement.hidden = false;
+                    nextContentElement.innerHTML = fullHTMLContent;
+                }
+            }
+        }
+
 
       } else {
         // Handle as normal link (target="_blank" in HTML will handle new tab)
@@ -97,4 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+  // If in test mode, ensure all .content elements are made visible initially.
+  // This is handled in the initial loop processing all .content elements.
 }); 

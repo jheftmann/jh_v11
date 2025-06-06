@@ -73,7 +73,13 @@ body {
 
 .expandable-section {
   margin-bottom: 20px;
-  overflow: hidden;
+}
+
+.trigger-and-first-content-container {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
 }
 
 .trigger {
@@ -81,23 +87,42 @@ body {
   line-height: 2rem;
   cursor: pointer;
   display: inline-block;
-  float: left;
 }
 
 .content {
   font-size: 2rem;
   line-height: 2rem;
   color: #555;
-  margin-left: 0.5rem;
-  display: inline;
+  margin: 0;
+  padding: 0;
 }
 
-.expand-link {
-  color: #555;
-  text-decoration: underline;
-  cursor: pointer;
+/* Styling for the first content block (inline within the container) */
+.trigger-and-first-content-container .content {
+    display: inline;
+    margin-left: 0;
+    vertical-align: top;
+}
+
+/* Styling for subsequent content blocks (direct children of expandable-section) */
+.expandable-section > .content {
+  display: block;
+  text-indent: 1.5em;
+  margin-top: 0;
+}
+
+/* Default link color within content (gray) */
+.expandable-section .content a {
+    color: #555;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .expand-link:hover {
   color: #111;
+}
+
+/* Styling for links in the last content block (black) */
+.expandable-section .content:last-of-type a {
+    color: #111;
 } 
