@@ -6,6 +6,8 @@ body {
   margin: 0;
   font-size: 32px;
 }
+
+/* Layout */
 .container {
   width: calc(100vw - 40px);
   height: calc(100vh - 40px);
@@ -14,10 +16,12 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .columns {
   display: flex;
   height: 100%;
 }
+
 .column {
   flex: 1 1 0;
   display: flex;
@@ -25,56 +29,31 @@ body {
   position: relative;
   align-items: flex-start;
 }
-.left {
-  /* No need for align-items here, handled in .column */
+
+/* Presentation */
+.text-large {
+  font-size: 2rem;
+  line-height: 2rem;
 }
-.right {
-  /* No need for align-items here, handled in .column */
+
+.text-gray {
+  color: #555;
 }
-.top-left, .top-right, .bottom-left, .bottom-center {
+
+.text-black {
+  color: #000;
+}
+
+.text-left {
   text-align: left;
   margin-left: 0;
-  font-size: 32px;
 }
-.bottom-center {
-  align-self: flex-start;
-}
-.top-left {
-  margin-top: 0;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-.top-right {
-  margin-top: 0;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-.bottom-left {
-  font-size: 1.3rem;
+
+.margin-auto-top {
   margin-top: auto;
 }
-.bottom-center {
-  font-size: 1.3rem;
-  margin-top: auto;
-}
-.additional-text {
-  font-size: 32px;
-  color: #555;
-  display: inline;
-}
 
-.top-right-text {
-  font-size: 32px;
-  color: #555;
-  display: inline;
-}
-
-.expandable-section {
-  margin-bottom: 20px;
-}
-
+/* Functional */
 .trigger-and-first-content-container {
   display: inline-block;
   vertical-align: top;
@@ -83,46 +62,73 @@ body {
 }
 
 .trigger {
-  font-size: 2rem;
-  line-height: 2rem;
   cursor: pointer;
   display: inline-block;
 }
 
 .content {
-  font-size: 2rem;
-  line-height: 2rem;
-  color: #555;
   margin: 0;
   padding: 0;
 }
 
-/* Styling for the first content block (inline within the container) */
-.trigger-and-first-content-container .content {
-    display: inline;
-    margin-left: 0;
-    vertical-align: top;
+/* Component specific */
+.creator-name {
+  font-size: 2rem;
+  margin-top: auto;
+  color: #000;
 }
 
-/* Styling for subsequent content blocks (direct children of expandable-section) */
+.info-label {
+  font-size: 2rem;
+  margin-top: auto;
+  color: #000;
+  align-self: flex-start;
+}
+
+.creator-name h1,
+.info-label h2,
+.trigger h2 {
+  margin: 0;
+  font-weight: normal;
+  font-size: inherit;
+}
+
+.trigger h2 {
+  display: inline;
+}
+
+/* Content blocks */
+.expandable-section {
+  margin-bottom: 20px;
+}
+
+.trigger-and-first-content-container .content {
+  display: inline;
+  margin-left: 0;
+  vertical-align: top;
+}
+
 .expandable-section > .content {
   display: block;
   text-indent: 1.5em;
   margin-top: 0;
 }
 
-/* Default link color within content (gray) */
+/* Links */
 .expandable-section .content a {
-    color: #555;
-    text-decoration: underline;
-    cursor: pointer;
+  color: #555;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .expand-link:hover {
   color: #111;
 }
 
-/* Styling for links in the last content block (black) */
 .expandable-section .content:last-of-type a {
-    color: #111;
+  color: #111;
+}
+
+.is-old-paragraph .expand-link:hover {
+  color: #000000;
 } 
