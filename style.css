@@ -20,6 +20,7 @@ body {
 .columns {
   display: flex;
   height: 100%;
+  gap: 20px;
 }
 
 .column {
@@ -28,6 +29,7 @@ body {
   flex-direction: column;
   position: relative;
   align-items: flex-start;
+  justify-content: space-between;
 }
 
 /* Presentation */
@@ -72,29 +74,33 @@ body {
 }
 
 /* Component specific */
-.creator-name {
+.nav-home {
   font-size: 2rem;
-  margin-top: auto;
   color: #000;
+  margin-top: auto;
 }
 
-.info-label {
+.nav-info {
   font-size: 2rem;
-  margin-top: auto;
   color: #000;
   align-self: flex-start;
+  margin-top: auto;
 }
 
-.creator-name h1,
-.info-label h2,
-.trigger h2 {
+.nav-home h1,
+.nav-info h2 {
   margin: 0;
   font-weight: normal;
   font-size: inherit;
 }
 
-.trigger h2 {
-  display: inline;
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
 }
 
 /* Content blocks */
@@ -112,11 +118,12 @@ body {
   display: block;
   text-indent: 1.5em;
   margin-top: 0;
+  color: #555;
 }
 
 /* Links */
 .expandable-section .content a {
-  color: #555;
+  color: #111;
   text-decoration: underline;
   cursor: pointer;
 }
