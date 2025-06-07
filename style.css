@@ -52,7 +52,7 @@ body {
 /* Layout */
 .container {
   width: calc(100vw - var(--spacing-double));
-  flex-grow: 1; /* Allow container to take up remaining height from body */
+  flex-grow: 1; /* Allow container to take up remaining height */
   margin: var(--spacing-unit);
   display: flex;
   flex-direction: column;
@@ -239,9 +239,9 @@ body {
     display: flex; /* Override to Flexbox for mobile */
     flex-direction: column; /* Stack columns vertically */
     flex-grow: 1; /* Ensure columns take full height on mobile */
-    gap: var(--spacing-unit); /* Maintain gap as vertical spacing */
+    gap: var(--spacing-unit); /* Re-enable gap for vertical spacing */
     align-items: flex-start; /* Align items to the start of the column */
-    justify-content: space-between; /* Push top items up, bottom items down */
+    justify-content: flex-start; /* Align items to the start for mobile layout */
   }
 
   /* Order for mobile layout */
@@ -254,11 +254,15 @@ body {
     flex-direction: column; /* Stack nav items vertically */
     align-items: flex-start; /* Align nav items to the start */
     gap: var(--spacing-unit); /* Add spacing between nav items */
+    margin-top: auto; /* Push .nav to the bottom */
   }
 
   /* Adjust specific component positioning for mobile in stacked layout */
   .expandable-section {
     width: 100%; /* Take full width in stacked layout */
+  }
+
+  .expandable-section:last-of-type {
   }
 
   .nav-home, .nav-info {
@@ -279,10 +283,8 @@ body {
   }
 
   .nav-home {
-    /* Removed temporary border, padding, margin, and background-color */
   }
   .nav-info {
-    /* Removed temporary border, padding, margin, and background-color */
   }
 }
 
@@ -340,10 +342,8 @@ body {
   }
 
   .nav-home {
-    /* Removed temporary border, padding, margin, and background-color */
   }
 
   .nav-info {
-    /* Removed temporary border, padding, margin, and background-color */
   }
 }
