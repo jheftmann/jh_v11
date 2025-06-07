@@ -23,11 +23,21 @@
   --letter-spacing-tight: -.025em;
 }
 
+html,
+body {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   font-family: var(--font-family-primary);
   background: var(--color-background);
   color: var(--color-true-black);
-  min-height: 100vh;
   margin: var(--spacing-none);
   font-size: var(--font-size-base);
   line-height: 110%;
