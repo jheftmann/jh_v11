@@ -25,17 +25,22 @@ body {
   --color-true-black: #000000;
 
   --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
-  --font-size-base: 32px; /* Base font-size, used by rem */
-  --font-size-large: 1rem; /* Changed to 1rem to match base font-size */
+  --font-size-base: 24px; /* Mobile base font size */
+  --font-size-large: 1rem; /* Matches mobile base font size */
 
-  --spacing-unit: 20px;
-  --spacing-double: 40px;
+  --spacing-unit: 15px; /* Mobile spacing unit */
+  --spacing-double: 30px; /* Adjusted double spacing for mobile */
   --spacing-indent: 1.5em;
   --spacing-none: 0;
 
   --letter-spacing-tight: -.025em;
 
-  /* Default font, line-height, letter-spacing moved here */
+  /* Breakpoint widths */
+  --breakpoint-tablet: 769px;
+  --breakpoint-laptop: 1025px;
+  --breakpoint-desktop: 1441px;
+
+  /* Default font, line-height, letter-spacing */
   font-size: var(--font-size-base);
   line-height: 110%;
   letter-spacing: var(--letter-spacing-tight);
@@ -49,41 +54,52 @@ body {
   flex-direction: column; /* Stack children vertically */
 }
 
-/* Layout */
+/* Layout - Mobile First */
 .container {
   width: calc(100vw - var(--spacing-double));
   flex-grow: 1; /* Allow container to take up remaining height */
   margin: var(--spacing-unit);
   display: flex;
   flex-direction: column;
-  /* Removed justify-content: space-between; as .columns will handle vertical spacing */
 }
 
 .columns {
-  display: grid; /* Use Grid for desktop/tablet layout */
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
-  gap: var(--spacing-unit); /* Gutter between grid items */
-  flex-grow: 1; /* Allow columns to take up remaining height in container */
+  display: flex; /* Flexbox for mobile */
+  flex-direction: column; /* Stack columns vertically */
+  flex-grow: 1; /* Ensure columns take full height on mobile */
+  gap: var(--spacing-unit); /* Vertical spacing */
+  align-items: flex-start; /* Align items to the start of the column */
+  justify-content: flex-start; /* Align items to the start for mobile layout */
 }
 
-/* Desktop/Tablet Grid Positioning */
-#section-fractional-leadership {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-#section-graphic-design {
-  grid-column: 2;
-  grid-row: 1;
-}
-
+/* Order for mobile layout */
+#section-fractional-leadership { order: 1; }
+#section-graphic-design { order: 2; }
 .nav {
-  grid-column: 1 / span 2; /* Span both columns */
-  grid-row: 2; /* Place in the second row */
-  align-self: end; /* Push to the bottom of the grid cell */
+  order: 3; /* Position .nav at the bottom on mobile */
+  width: 100%; /* Take full width */
   display: flex;
-  justify-content: space-between; /* Distribute items horizontally */
+  flex-direction: column; /* Stack nav items vertically */
+  align-items: flex-start; /* Align nav items to the start */
+  gap: var(--spacing-unit); /* Add spacing between nav items */
+  margin-top: auto; /* Push .nav to the bottom */
+}
+
+/* Adjust specific component positioning for mobile in stacked layout */
+.expandable-section {
+  width: 100%; /* Take full width in stacked layout */
+}
+
+.expandable-section:last-of-type {
+}
+
+.nav-home, .nav-info {
+  margin-top: 0; /* Remove specific margin-top for nav items within .nav */
+}
+
+/* Adjust text indent for content blocks on mobile if desired */
+.expandable-section > .content {
+  text-indent: 1em; /* Slightly smaller indent for mobile */
 }
 
 /* Presentation */
@@ -153,17 +169,15 @@ body {
   font-size: var(--font-size-large);
   color: var(--color-true-black);
   display: flex; /* Make nav items flex containers */
-  align-items: center; /* Center items vertically */
-  flex: 1; /* Allow nav items to take equal horizontal space */
+  align-items: flex-start; /* Align items to the start for mobile stacking */
+  /* No flex: 1; here as they are stacked vertically */
 }
 
 /* Component specific */
 /* No unique styles needed here for .nav-home and .nav-info as they are handled by .nav-item and .nav */
 .nav-home {
-  /* Removed temporary border, padding, margin, and background-color */
 }
 .nav-info {
-  /* Removed temporary border, padding, margin, and background-color */
 }
 
 .nav-home h1,
@@ -215,91 +229,12 @@ body {
   color: var(--color-true-black);
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  :root {
-    --font-size-base: 24px; /* Smaller base font for mobile */
-    --font-size-large: 1rem; /* Changed to 1rem to match mobile base font-size */
-    --spacing-unit: 15px; /* Slightly smaller spacing for mobile */
-    --spacing-double: 30px; /* Adjusted double spacing */
-
-    /* Override default font, line-height, letter-spacing */
-    font-size: var(--font-size-base);
-    line-height: 110%;
-    letter-spacing: var(--letter-spacing-tight);
-  }
-
-  .container {
-    width: calc(100vw - var(--spacing-double));
-    flex-grow: 1; /* Allow container to take up remaining height */
-    margin: var(--spacing-unit);
-  }
-
-  .columns {
-    display: flex; /* Override to Flexbox for mobile */
-    flex-direction: column; /* Stack columns vertically */
-    flex-grow: 1; /* Ensure columns take full height on mobile */
-    gap: var(--spacing-unit); /* Re-enable gap for vertical spacing */
-    align-items: flex-start; /* Align items to the start of the column */
-    justify-content: flex-start; /* Align items to the start for mobile layout */
-  }
-
-  /* Order for mobile layout */
-  #section-fractional-leadership { order: 1; }
-  #section-graphic-design { order: 2; }
-  .nav {
-    order: 3; /* Position .nav at the bottom on mobile */
-    width: 100%; /* Take full width */
-    display: flex;
-    flex-direction: column; /* Stack nav items vertically */
-    align-items: flex-start; /* Align nav items to the start */
-    gap: var(--spacing-unit); /* Add spacing between nav items */
-    margin-top: auto; /* Push .nav to the bottom */
-  }
-
-  /* Adjust specific component positioning for mobile in stacked layout */
-  .expandable-section {
-    width: 100%; /* Take full width in stacked layout */
-  }
-
-  .expandable-section:last-of-type {
-  }
-
-  .nav-home, .nav-info {
-    margin-top: 0; /* Remove specific margin-top for nav items within .nav */
-  }
-
-  /* Adjust text indent for content blocks on mobile if desired */
-  .expandable-section > .content {
-    text-indent: 1em; /* Slightly smaller indent for mobile */
-  }
-
-  .nav-item {
-    font-size: var(--font-size-large);
-    color: var(--color-true-black);
-    display: flex; /* Make nav items flex containers */
-    align-items: flex-start; /* Align items to the start for mobile stacking */
-    /* No flex: 1; here as they are stacked vertically */
-  }
-
-  .nav-home {
-  }
-  .nav-info {
-  }
-}
-
 /* Tablet Styles */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) {
   :root {
-    --font-size-base: 24px; /* Smaller base font for tablet */
-    --font-size-large: 1rem; /* Changed to 1rem to match tablet base font-size */
-    --spacing-unit: 15px; /* Slightly smaller spacing for tablet */
-    --spacing-double: 30px; /* Adjusted double spacing */
-
-    /* Override default font, line-height, letter-spacing */
-    font-size: var(--font-size-base);
-    line-height: 110%;
-    letter-spacing: var(--letter-spacing-tight);
+    --font-size-base: 24px; /* Tablet base font size */
+    --spacing-unit: 15px; /* Tablet spacing unit */
+    --spacing-double: 30px; /* Adjusted double spacing for tablet */
   }
 
   .container {
@@ -314,7 +249,14 @@ body {
     grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
     gap: var(--spacing-unit); /* Gutter between grid items */
     flex-grow: 1;
+    align-items: start; /* Reset mobile alignment */
+    justify-content: start; /* Reset mobile justification */
   }
+
+  /* Reset mobile order */
+  #section-fractional-leadership { order: unset; }
+  #section-graphic-design { order: unset; }
+  .nav { order: unset; }
 
   /* Tablet Grid Positioning */
   #section-fractional-leadership {
@@ -332,18 +274,75 @@ body {
     grid-row: 2;
     align-self: end;
     display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
     justify-content: space-between;
+    width: 100%; /* Take full width */
+    margin-top: 0; /* Reset mobile margin */
   }
 
   .nav-item {
-    display: flex; /* Make nav items flex containers */
-    align-items: center; /* Center items vertically */
-    flex: 1; /* Allow nav items to take equal horizontal space */
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+}
+
+/* Laptop Styles */
+@media (min-width: 1025px) {
+  :root {
+    --font-size-base: 32px; /* Desktop base font size */
+    --spacing-unit: 20px; /* Desktop spacing unit */
+    --spacing-double: 40px; /* Adjusted double spacing for desktop */
   }
 
-  .nav-home {
+  .container {
+    width: calc(100vw - var(--spacing-double));
+    flex-grow: 1;
+    margin: var(--spacing-unit);
   }
 
-  .nav-info {
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: var(--spacing-unit);
+    flex-grow: 1;
   }
+
+  /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: space-between;
+    width: 100%; /* Take full width */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1441px) {
+  :root {
+    --font-size-base: 36px; /* Larger font size for desktop */
+    --spacing-unit: 25px; /* Larger spacing for desktop */
+    --spacing-double: 50px; /* Larger double spacing for desktop */
+  }
+  /* Layout inherits from laptop breakpoint */
 }
