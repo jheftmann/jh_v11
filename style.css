@@ -147,18 +147,21 @@ body {
   padding: var(--spacing-none);
 }
 
-/* Component specific */
-.nav-home {
+/* Shared nav item styles */
+.nav-item {
   font-size: var(--font-size-large);
   color: var(--color-true-black);
   margin-top: auto;
 }
 
+/* Component specific */
+.nav-home {
+  /* Properties moved to .nav-item */
+}
+
 .nav-info {
-  font-size: var(--font-size-large);
-  color: var(--color-true-black);
-  align-self: flex-start;
-  margin-top: auto;
+  align-self: flex-start; /* This property is specific to nav-info */
+  /* Other properties moved to .nav-item */
 }
 
 .nav-home h1,
