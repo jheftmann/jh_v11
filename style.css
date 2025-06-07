@@ -187,4 +187,78 @@ body {
 
 .is-old-paragraph .expand-link:hover {
   color: var(--color-true-black);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 18px; /* Smaller base font for mobile */
+    --font-size-large: 1.2rem; /* Smaller large font for mobile */
+    --spacing-unit: 15px; /* Slightly smaller spacing for mobile */
+    --spacing-double: 30px; /* Adjusted double spacing */
+  }
+
+  .container {
+    width: calc(100vw - var(--spacing-double)); /* Adjust width based on new spacing */
+    height: auto; /* Let content dictate height on mobile */
+    margin: var(--spacing-unit); /* Apply consistent margin */
+  }
+
+  .columns {
+    flex-direction: column; /* Stack columns vertically */
+    height: auto; /* Let content dictate height for columns */
+    gap: var(--spacing-unit); /* Maintain gap as vertical spacing */
+  }
+
+  .column {
+    align-items: flex-start; /* Ensure content aligns to the left */
+    justify-content: flex-start; /* Align content to the top of the column */
+    margin-bottom: var(--spacing-unit); /* Add some space between stacked columns */
+  }
+
+  /* Adjust specific component positioning for mobile if needed */
+  .nav-home, .nav-info {
+    margin-top: var(--spacing-unit); /* Adjust positioning from auto to a fixed margin */
+  }
+
+  .nav-info {
+    align-self: flex-start; /* Ensure information stays left-aligned */
+  }
+
+  /* Adjust text indent for content blocks on mobile if desired */
+  .expandable-section > .content {
+    text-indent: 1em; /* Slightly smaller indent for mobile */
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --font-size-base: 24px; /* Intermediate base font for tablet */
+    --font-size-large: 1.5rem; /* Intermediate large font for tablet */
+    --spacing-unit: 18px; /* Intermediate spacing for tablet */
+    --spacing-double: 36px; /* Adjusted double spacing */
+  }
+
+  .container {
+    width: calc(100vw - var(--spacing-double));
+    height: calc(100vh - var(--spacing-double)); /* Keep height fixed for tablets */
+    margin: var(--spacing-unit);
+  }
+
+  .columns {
+    flex-direction: row; /* Keep columns side-by-side for tablet */
+    height: 100%;
+    gap: var(--spacing-unit);
+  }
+
+  .column {
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  /* Adjust specific component positioning for tablet if needed */
+  .nav-home, .nav-info {
+    margin-top: auto; /* Revert to auto margin for tablet */
+  }
 } 
