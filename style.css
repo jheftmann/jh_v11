@@ -5,27 +5,11 @@
   font-style: normal;
 }
 
-:root {
-  --color-background: #fff;
-  --color-text-gray: #8E8E8E;
-  --color-text-light-gray: #D5D5D5;
-  --color-true-black: #000000;
-
-  --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
-  --font-size-base: 32px;
-  --font-size-large: 2rem;
-
-  --spacing-unit: 20px;
-  --spacing-double: 40px;
-  --spacing-indent: 1.5em;
-  --spacing-none: 0;
-
-  --letter-spacing-tight: -.025em;
-}
-
 html,
 body {
+  height: 100%; /* Ensure html and body take full viewport height */
   box-sizing: border-box;
+  margin: var(--spacing-none); /* Remove default margins */
 }
 
 *,
@@ -34,20 +18,41 @@ body {
   box-sizing: inherit;
 }
 
-body {
-  font-family: var(--font-family-primary);
-  background: var(--color-background);
-  color: var(--color-true-black);
-  margin: var(--spacing-none);
+:root {
+  --color-background: #fff;
+  --color-text-gray: #8E8E8E;
+  --color-text-light-gray: #D5D5D5;
+  --color-true-black: #000000;
+
+  --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
+  --font-size-base: 32px; /* Base font-size, used by rem */
+  --font-size-large: 2rem;
+
+  --spacing-unit: 20px;
+  --spacing-double: 40px;
+  --spacing-indent: 1.5em;
+  --spacing-none: 0;
+
+  --letter-spacing-tight: -.025em;
+
+  /* Default font, line-height, letter-spacing moved here */
   font-size: var(--font-size-base);
   line-height: 110%;
   letter-spacing: var(--letter-spacing-tight);
 }
 
+body {
+  font-family: var(--font-family-primary);
+  background: var(--color-background);
+  color: var(--color-true-black);
+  display: flex; /* Make body a flex container */
+  flex-direction: column; /* Stack children vertically */
+}
+
 /* Layout */
 .container {
   width: calc(100vw - var(--spacing-double));
-  height: calc(100vh - var(--spacing-double));
+  flex-grow: 1; /* Allow container to take up remaining height from body */
   margin: var(--spacing-unit);
   display: flex;
   flex-direction: column;
@@ -55,18 +60,34 @@ body {
 }
 
 .columns {
-  display: flex;
-  height: 100%;
-  gap: var(--spacing-unit);
+  display: grid; /* Use Grid for desktop/tablet layout */
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
+  gap: var(--spacing-unit); /* Gutter between grid items */
+  flex-grow: 1; /* Allow columns to take up remaining height in container */
 }
 
-.column {
-  flex: 1 1 var(--spacing-none);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: flex-start;
-  justify-content: space-between;
+/* Desktop/Tablet Grid Positioning */
+#section-fractional-leadership {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#section-graphic-design {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.nav-home {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+}
+
+.nav-info {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
 }
 
 /* Presentation */
@@ -196,33 +217,43 @@ body {
     --font-size-large: 1.2rem; /* Smaller large font for mobile */
     --spacing-unit: 15px; /* Slightly smaller spacing for mobile */
     --spacing-double: 30px; /* Adjusted double spacing */
+
+    /* Override default font, line-height, letter-spacing */
+    font-size: var(--font-size-base);
+    line-height: 110%;
+    letter-spacing: var(--letter-spacing-tight);
   }
 
   .container {
-    width: calc(100vw - var(--spacing-double)); /* Adjust width based on new spacing */
-    height: auto; /* Let content dictate height on mobile */
-    margin: var(--spacing-unit); /* Apply consistent margin */
+    width: calc(100vw - var(--spacing-double));
+    flex-grow: 1; /* Allow container to take up remaining height */
+    margin: var(--spacing-unit);
   }
 
   .columns {
+    display: flex; /* Override to Flexbox for mobile */
     flex-direction: column; /* Stack columns vertically */
     height: auto; /* Let content dictate height for columns */
     gap: var(--spacing-unit); /* Maintain gap as vertical spacing */
-  }
-
-  .column {
-    align-items: flex-start; /* Ensure content aligns to the left */
+    align-items: flex-start; /* Align items to the start of the column */
     justify-content: flex-start; /* Align content to the top of the column */
-    margin-bottom: var(--spacing-unit); /* Add some space between stacked columns */
   }
 
-  /* Adjust specific component positioning for mobile if needed */
+  /* Order for mobile layout */
+  #section-fractional-leadership { order: 1; }
+  #section-graphic-design { order: 2; }
+  .nav-home { order: 3; }
+  .nav-info { order: 4; }
+
+  /* Adjust specific component positioning for mobile in stacked layout */
+  .expandable-section {
+    width: 100%; /* Take full width in stacked layout */
+  }
+
   .nav-home, .nav-info {
-    margin-top: var(--spacing-unit); /* Adjust positioning from auto to a fixed margin */
-  }
-
-  .nav-info {
-    align-self: flex-start; /* Ensure information stays left-aligned */
+    margin-top: var(--spacing-unit); /* Ensure consistent margin from preceding element in stacked layout */
+    align-self: flex-start; /* Ensure items align to start of column */
+    width: 100%; /* Take full width */
   }
 
   /* Adjust text indent for content blocks on mobile if desired */
@@ -238,27 +269,60 @@ body {
     --font-size-large: 1.5rem; /* Intermediate large font for tablet */
     --spacing-unit: 18px; /* Intermediate spacing for tablet */
     --spacing-double: 36px; /* Adjusted double spacing */
+
+    /* Override default font, line-height, letter-spacing */
+    font-size: var(--font-size-base);
+    line-height: 110%;
+    letter-spacing: var(--letter-spacing-tight);
   }
 
   .container {
     width: calc(100vw - var(--spacing-double));
-    height: calc(100vh - var(--spacing-double)); /* Keep height fixed for tablets */
+    flex-grow: 1; /* Allow container to take up remaining height */
     margin: var(--spacing-unit);
   }
 
   .columns {
-    flex-direction: row; /* Keep columns side-by-side for tablet */
-    height: 100%;
-    gap: var(--spacing-unit);
+    display: grid; /* Use Grid for tablet layout too */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
+    gap: var(--spacing-unit); /* Gutter between grid items */
+    flex-grow: 1; /* Allow columns to take up remaining height in container */
   }
 
-  .column {
-    align-items: flex-start;
-    justify-content: space-between;
+  /* Tablet Grid Positioning (same as desktop) */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+    order: unset; /* Reset order if it was set in mobile */
   }
 
-  /* Adjust specific component positioning for tablet if needed */
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+    order: unset;
+  }
+
+  .nav-home {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    order: unset;
+  }
+
+  .nav-info {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    order: unset;
+  }
+
+  /* Remove old flex properties that conflict with grid */
+  .expandable-section {
+    flex: unset; /* Remove flex property */
+  }
+
   .nav-home, .nav-info {
-    margin-top: auto; /* Revert to auto margin for tablet */
+    flex: unset; /* Remove flex property */
   }
-} 
+}
