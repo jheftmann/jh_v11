@@ -56,7 +56,7 @@ body {
   margin: var(--spacing-unit);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* Removed justify-content: space-between; as .columns will handle vertical spacing */
 }
 
 .columns {
@@ -78,16 +78,12 @@ body {
   grid-row: 1;
 }
 
-.nav-home {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: end;
-}
-
-.nav-info {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: end;
+.nav {
+  grid-column: 1 / span 2; /* Span both columns */
+  grid-row: 2; /* Place in the second row */
+  align-self: end; /* Push to the bottom of the grid cell */
+  display: flex;
+  justify-content: space-between; /* Distribute items horizontally */
 }
 
 /* Presentation */
@@ -108,6 +104,11 @@ body {
 .text-left {
   text-align: left;
   margin-left: var(--spacing-none);
+}
+
+.text-right {
+  text-align: right;
+  margin-right: var(--spacing-none);
 }
 
 .margin-auto-top {
@@ -147,18 +148,22 @@ body {
   padding: var(--spacing-none);
 }
 
-/* Component specific */
-.nav-home {
+/* Shared nav item styles */
+.nav-item {
   font-size: var(--font-size-large);
   color: var(--color-true-black);
-  margin-top: auto;
+  display: flex; /* Make nav items flex containers */
+  align-items: center; /* Center items vertically */
+  flex: 1; /* Allow nav items to take equal horizontal space */
 }
 
+/* Component specific */
+/* No unique styles needed here for .nav-home and .nav-info as they are handled by .nav-item and .nav */
+.nav-home {
+  /* Removed temporary border, padding, margin, and background-color */
+}
 .nav-info {
-  font-size: var(--font-size-large);
-  color: var(--color-true-black);
-  align-self: flex-start;
-  margin-top: auto;
+  /* Removed temporary border, padding, margin, and background-color */
 }
 
 .nav-home h1,
@@ -175,7 +180,7 @@ body {
 
 /* Content blocks */
 .expandable-section {
-  margin-bottom: var(--spacing-unit);
+  /* Removed margin-bottom: var(--spacing-unit); as spacing is handled by grid gap */
 }
 
 .trigger-and-first-content-container .content {
@@ -233,17 +238,23 @@ body {
   .columns {
     display: flex; /* Override to Flexbox for mobile */
     flex-direction: column; /* Stack columns vertically */
-    height: auto; /* Let content dictate height for columns */
+    flex-grow: 1; /* Ensure columns take full height on mobile */
     gap: var(--spacing-unit); /* Maintain gap as vertical spacing */
     align-items: flex-start; /* Align items to the start of the column */
-    justify-content: flex-start; /* Align content to the top of the column */
+    justify-content: space-between; /* Push top items up, bottom items down */
   }
 
   /* Order for mobile layout */
   #section-fractional-leadership { order: 1; }
   #section-graphic-design { order: 2; }
-  .nav-home { order: 3; }
-  .nav-info { order: 4; }
+  .nav {
+    order: 3; /* Position .nav at the bottom on mobile */
+    width: 100%; /* Take full width */
+    display: flex;
+    flex-direction: column; /* Stack nav items vertically */
+    align-items: flex-start; /* Align nav items to the start */
+    gap: var(--spacing-unit); /* Add spacing between nav items */
+  }
 
   /* Adjust specific component positioning for mobile in stacked layout */
   .expandable-section {
@@ -251,24 +262,37 @@ body {
   }
 
   .nav-home, .nav-info {
-    margin-top: var(--spacing-unit); /* Ensure consistent margin from preceding element in stacked layout */
-    align-self: flex-start; /* Ensure items align to start of column */
-    width: 100%; /* Take full width */
+    margin-top: 0; /* Remove specific margin-top for nav items within .nav */
   }
 
   /* Adjust text indent for content blocks on mobile if desired */
   .expandable-section > .content {
     text-indent: 1em; /* Slightly smaller indent for mobile */
   }
+
+  .nav-item {
+    font-size: var(--font-size-large);
+    color: var(--color-true-black);
+    display: flex; /* Make nav items flex containers */
+    align-items: flex-start; /* Align items to the start for mobile stacking */
+    /* No flex: 1; here as they are stacked vertically */
+  }
+
+  .nav-home {
+    /* Removed temporary border, padding, margin, and background-color */
+  }
+  .nav-info {
+    /* Removed temporary border, padding, margin, and background-color */
+  }
 }
 
 /* Tablet Styles */
 @media (min-width: 769px) and (max-width: 1024px) {
   :root {
-    --font-size-base: 24px; /* Intermediate base font for tablet */
+    --font-size-base: 24px; /* Smaller base font for tablet */
     --font-size-large: 1rem; /* Changed to 1rem to match tablet base font-size */
-    --spacing-unit: 18px; /* Intermediate spacing for tablet */
-    --spacing-double: 36px; /* Adjusted double spacing */
+    --spacing-unit: 15px; /* Slightly smaller spacing for tablet */
+    --spacing-double: 30px; /* Adjusted double spacing */
 
     /* Override default font, line-height, letter-spacing */
     font-size: var(--font-size-base);
@@ -278,51 +302,48 @@ body {
 
   .container {
     width: calc(100vw - var(--spacing-double));
-    flex-grow: 1; /* Allow container to take up remaining height */
+    flex-grow: 1;
     margin: var(--spacing-unit);
   }
 
   .columns {
-    display: grid; /* Use Grid for tablet layout too */
+    display: grid; /* Use Grid for tablet layout */
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
     gap: var(--spacing-unit); /* Gutter between grid items */
-    flex-grow: 1; /* Allow columns to take up remaining height in container */
+    flex-grow: 1;
   }
 
-  /* Tablet Grid Positioning (same as desktop) */
+  /* Tablet Grid Positioning */
   #section-fractional-leadership {
     grid-column: 1;
     grid-row: 1;
-    order: unset; /* Reset order if it was set in mobile */
   }
 
   #section-graphic-design {
     grid-column: 2;
     grid-row: 1;
-    order: unset;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav-item {
+    display: flex; /* Make nav items flex containers */
+    align-items: center; /* Center items vertically */
+    flex: 1; /* Allow nav items to take equal horizontal space */
   }
 
   .nav-home {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: end;
-    order: unset;
+    /* Removed temporary border, padding, margin, and background-color */
   }
 
   .nav-info {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: end;
-    order: unset;
-  }
-
-  /* Remove old flex properties that conflict with grid */
-  .expandable-section {
-    flex: unset; /* Remove flex property */
-  }
-
-  .nav-home, .nav-info {
-    flex: unset; /* Remove flex property */
+    /* Removed temporary border, padding, margin, and background-color */
   }
 }
