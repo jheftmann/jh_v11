@@ -244,51 +244,46 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Information Overlay Logic ---
   const informationOverlay = document.getElementById('information-overlay');
   const navInfoLink = document.querySelector('.nav-info a');
-  const closeButton = informationOverlay.querySelector('.close-button');
+  // Refactored to target elements within the single .nav
+  const mainNav = document.querySelector('.nav');
+  const closeButton = document.querySelector('.close-button');
   const overlayContent = informationOverlay.querySelector('.overlay-content');
-  const overlayNavHome = informationOverlay.querySelector('.overlay-nav .nav-home');
-  const overlayNavInfo = informationOverlay.querySelector('.overlay-nav .nav-info');
-  const overlayInfoLink = informationOverlay.querySelector('.overlay-nav .nav-info .nav-link');
+  // const overlayNavHome = mainNav.querySelector('.nav-home'); // This will now refer to the same nav-home element
+  // const overlayNavInfo = mainNav.querySelector('.nav-info'); // This will now refer to the same nav-info element
 
   console.log('navInfoLink:', navInfoLink);
   console.log('closeButton:', closeButton);
-  console.log('overlayInfoLink:', overlayInfoLink);
+  console.log('Initial informationOverlay display:', getComputedStyle(informationOverlay).display);
+  console.log('Initial informationOverlay pointer-events:', getComputedStyle(informationOverlay).pointerEvents);
 
   function openInformationOverlay() {
-    console.log('Attempting to open information overlay.');
-    console.log('Opening information overlay.');
     // Close any currently open expandable sections
     document.querySelectorAll('.expandable-section.is-open').forEach(openSection => {
       setSectionOpenState(openSection, false);
     });
 
+    // Remove text-black classes from nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('text-black');
+    });
+
     document.body.classList.add('information-open');
-    informationOverlay.style.visibility = 'visible';
-    console.log('navInfoLink pointer-events on open:', navInfoLink.style.pointerEvents);
-    // Remove manual opacity and background-color settings
-    // Let CSS handle all transitions
+    // Let CSS handle display, visibility, and pointer-events
 
     // Update URL to denote that the information layer is revealed
     // (This will be implemented in a future task based on issue #4)
   }
 
   function closeInformationOverlay() {
-    console.log('Attempting to close information overlay.');
-    console.log('Closing information overlay.');
+    console.trace('closeInformationOverlay called.'); // Add console.trace here
     
-    // Remove manual opacity settings
-    // Let CSS handle all transitions
-    document.body.classList.remove('information-open');
-    console.log('navInfoLink pointer-events on close:', navInfoLink.style.pointerEvents);
-
-    // Hide overlay after its fade out transition
-    informationOverlay.addEventListener('transitionend', function handler(e) {
-      console.log('Transition end event fired.', e.propertyName, informationOverlay.style.opacity);
-      if (e.propertyName === 'opacity' && informationOverlay.style.opacity === '0') {
-        informationOverlay.style.visibility = 'hidden';
-        informationOverlay.removeEventListener('transitionend', handler);
-      }
+    // Add back text-black classes to nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.add('text-black');
     });
+
+    document.body.classList.remove('information-open');
+    // Let CSS handle display, visibility, and pointer-events after transition
 
     // Update URL to remove information layer indicator
     // (This will be implemented in a future task based on issue #4)
@@ -298,21 +293,17 @@ document.addEventListener('DOMContentLoaded', function() {
   if (navInfoLink) {
     navInfoLink.addEventListener('click', function(e) {
       e.preventDefault(); // Prevent default link behavior
-      openInformationOverlay();
+      if (document.body.classList.contains('information-open')) {
+        closeInformationOverlay();
+      } else {
+        openInformationOverlay();
+      }
     });
   }
 
   // Event listener for closing the information overlay
   if (closeButton) {
     closeButton.addEventListener('click', function() {
-      closeInformationOverlay();
-    });
-  }
-
-  // Event listener for closing the information overlay via the 'Information' link inside the overlay
-  if (overlayInfoLink) {
-    overlayInfoLink.addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default link behavior (jumping to #)
       closeInformationOverlay();
     });
   }
