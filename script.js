@@ -240,4 +240,82 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // If in test mode, ensure all .content elements are made visible initially.
   // This is handled in the initial loop processing all .content elements.
+
+  // --- Information Overlay Logic ---
+  const informationOverlay = document.getElementById('information-overlay');
+  const navInfoLink = document.querySelector('.nav-info a');
+  const closeButton = informationOverlay.querySelector('.close-button');
+  const overlayContent = informationOverlay.querySelector('.overlay-content');
+  const overlayNavHome = informationOverlay.querySelector('.overlay-nav .nav-home');
+  const overlayNavInfo = informationOverlay.querySelector('.overlay-nav .nav-info');
+  const overlayInfoLink = informationOverlay.querySelector('.overlay-nav .nav-info .nav-link');
+
+  console.log('navInfoLink:', navInfoLink);
+  console.log('closeButton:', closeButton);
+  console.log('overlayInfoLink:', overlayInfoLink);
+
+  function openInformationOverlay() {
+    console.log('Attempting to open information overlay.');
+    console.log('Opening information overlay.');
+    // Close any currently open expandable sections
+    document.querySelectorAll('.expandable-section.is-open').forEach(openSection => {
+      setSectionOpenState(openSection, false);
+    });
+
+    document.body.classList.add('information-open');
+    informationOverlay.style.visibility = 'visible';
+    console.log('navInfoLink pointer-events on open:', navInfoLink.style.pointerEvents);
+    // Remove manual opacity and background-color settings
+    // Let CSS handle all transitions
+
+    // Update URL to denote that the information layer is revealed
+    // (This will be implemented in a future task based on issue #4)
+  }
+
+  function closeInformationOverlay() {
+    console.log('Attempting to close information overlay.');
+    console.log('Closing information overlay.');
+    
+    // Remove manual opacity settings
+    // Let CSS handle all transitions
+    document.body.classList.remove('information-open');
+    console.log('navInfoLink pointer-events on close:', navInfoLink.style.pointerEvents);
+
+    // Hide overlay after its fade out transition
+    informationOverlay.addEventListener('transitionend', function handler(e) {
+      console.log('Transition end event fired.', e.propertyName, informationOverlay.style.opacity);
+      if (e.propertyName === 'opacity' && informationOverlay.style.opacity === '0') {
+        informationOverlay.style.visibility = 'hidden';
+        informationOverlay.removeEventListener('transitionend', handler);
+      }
+    });
+
+    // Update URL to remove information layer indicator
+    // (This will be implemented in a future task based on issue #4)
+  }
+
+  // Event listener for opening the information overlay
+  if (navInfoLink) {
+    navInfoLink.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default link behavior
+      openInformationOverlay();
+    });
+  }
+
+  // Event listener for closing the information overlay
+  if (closeButton) {
+    closeButton.addEventListener('click', function() {
+      closeInformationOverlay();
+    });
+  }
+
+  // Event listener for closing the information overlay via the 'Information' link inside the overlay
+  if (overlayInfoLink) {
+    overlayInfoLink.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default link behavior (jumping to #)
+      closeInformationOverlay();
+    });
+  }
+  console.log('Setting up close button listener. closeButton is:', closeButton);
+  // --------------------------------
 }); 

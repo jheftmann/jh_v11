@@ -28,6 +28,7 @@ body {
   --font-size-base: 24px; /* Mobile base font size */
   --font-size-large: 1rem; /* Matches mobile base font size */
 
+  --spacing-unit-sm: 5px;
   --spacing-unit: 15px; /* Mobile spacing unit */
   --spacing-double: 30px; /* Adjusted double spacing for mobile */
   --spacing-indent: 1.5em;
@@ -39,6 +40,9 @@ body {
   --breakpoint-tablet: 769px;
   --breakpoint-laptop: 1025px;
   --breakpoint-desktop: 1441px;
+
+  /* Transition timing */
+  --transition-overlay: 0.5s ease;
 
   /* Default font, line-height, letter-spacing */
   font-size: var(--font-size-base);
@@ -102,6 +106,145 @@ body {
   text-indent: 1em; /* Slightly smaller indent for mobile */
 }
 
+/* Tablet Styles */
+@media (min-width: 769px) {
+  :root {
+    --font-size-base: 24px; /* Tablet base font size */
+    --spacing-unit: 15px; /* Tablet spacing unit */
+    --spacing-double: 30px; /* Adjusted double spacing for tablet */
+  }
+
+  .container {
+    width: calc(100vw - var(--spacing-double));
+    flex-grow: 1;
+    margin: var(--spacing-unit);
+  }
+
+  .columns {
+    display: grid; /* Use Grid for tablet layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
+    gap: var(--spacing-unit); /* Gutter between grid items */
+    flex-grow: 1;
+    align-items: start; /* Reset mobile alignment */
+    justify-content: start; /* Reset mobile justification */
+  }
+
+  /* Reset mobile order */
+  #section-fractional-leadership { order: unset; }
+  #section-graphic-design { order: unset; }
+  .nav { order: unset; }
+
+  /* Tablet Grid Positioning */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+    margin-top: 0; /* Reset mobile margin */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .nav-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+
+/* Laptop Styles */
+@media (min-width: 1025px) {
+  :root {
+    --font-size-base: 32px; /* Desktop base font size */
+    --spacing-unit: 20px; /* Desktop spacing unit */
+    --spacing-double: 40px; /* Adjusted double spacing for desktop */
+  }
+
+  .container {
+    width: calc(100vw - var(--spacing-double));
+    flex-grow: 1;
+    margin: var(--spacing-unit);
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: var(--spacing-unit);
+    flex-grow: 1;
+  }
+
+  /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    /* justify-content: space-between; */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .nav-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1441px) {
+  :root {
+    --font-size-base: 36px; /* Larger font size for desktop */
+    --spacing-unit: 25px; /* Larger spacing for desktop */
+    --spacing-double: 50px; /* Larger double spacing for desktop */
+  }
+  /* Layout inherits from laptop breakpoint */
+}
+
 /* Presentation */
 .text-large {
   font-size: var(--font-size-large);
@@ -125,6 +268,12 @@ body {
 .text-right {
   text-align: right;
   margin-right: var(--spacing-none);
+}
+
+sup {
+  font-size: 16px;
+  vertical-align: text-top;
+  margin-left: var(--spacing-unit-sm);
 }
 
 .margin-auto-top {
@@ -229,120 +378,133 @@ body {
   color: var(--color-true-black);
 }
 
-/* Tablet Styles */
-@media (min-width: 769px) {
-  :root {
-    --font-size-base: 24px; /* Tablet base font size */
-    --spacing-unit: 15px; /* Tablet spacing unit */
-    --spacing-double: 30px; /* Adjusted double spacing for tablet */
-  }
+/* Information Overlay Styles */
+#information-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-overlay), background-color var(--transition-overlay), visibility 0s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none; /* Disable clicks on overlay when closed */
+}
 
-  .container {
+body.information-open #information-overlay {
+  opacity: 1;
+  visibility: visible;
+  background-color: var(--color-true-black);
+  transition: opacity var(--transition-overlay), background-color var(--transition-overlay), visibility 0s;
+  pointer-events: auto; /* Enable clicks on overlay when open */
+}
+
+body.information-open {
+  overflow: hidden; /* Prevent scrolling of main content */
+  background-color: var(--color-true-black); /* Body background also fades to black */
+  transition: background-color var(--transition-overlay);
+}
+
+body.information-open .container {
+  opacity: 0;
+  transition: opacity var(--transition-overlay); /* Fade out main content */
+}
+
+.overlay-nav {
+  position: absolute;
+  bottom: var(--spacing-unit);
+  left: var(--spacing-unit);
+  width: calc(100vw - var(--spacing-double));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.overlay-nav .nav-item {
+  font-size: var(--font-size-large);
+  display: flex;
+  align-items: center;
+  transition: opacity var(--transition-overlay), color var(--transition-overlay);
+  flex: 1; /* Ensure nav items distribute space within overlay-nav */
+}
+
+.overlay-nav .nav-info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.overlay-nav .close-button {
+  cursor: pointer;
+  margin-right: var(--spacing-unit-sm); /* Spacing between 'x' and 'Information' */
+  font-size: var(--font-size-large);
+  line-height: 1;
+  transition: opacity var(--transition-overlay), color var(--transition-overlay);
+  z-index: 1002; /* Ensure it is clickable above other elements */
+  flex-shrink: 0; /* Prevent the close button from shrinking */
+}
+
+body.information-open .overlay-nav .nav-item,
+body.information-open .overlay-nav .nav-link,
+body.information-open .overlay-nav .close-button {
+  color: var(--color-background);
+  opacity: 1;
+}
+
+.overlay-nav .nav-info .nav-link {
+  margin: 0;
+  line-height: 1;
+  transition: color var(--transition-overlay), opacity var(--transition-overlay);
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 1002;
+  display: inline-block;
+  opacity: 0;
+}
+
+.overlay-content {
+  opacity: 0;
+  transition: opacity var(--transition-overlay);
+  color: var(--color-background);
+  text-align: center;
+}
+
+body.information-open .overlay-content {
+  opacity: 1;
+}
+
+.overlay-info-text {
+  font-size: var(--font-size-large);
+  color: var(--color-true-black); /* Start black */
+  text-align: right; /* Ensure the text itself is right-aligned */
+}
+
+/* Tablet styles for overlay - adjust positioning and font sizes */
+@media (min-width: var(--breakpoint-tablet)) {
+  .overlay-nav {
+    bottom: var(--spacing-unit);
     width: calc(100vw - var(--spacing-double));
-    flex-grow: 1;
-    margin: var(--spacing-unit);
-  }
-
-  .columns {
-    display: grid; /* Use Grid for tablet layout */
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
-    gap: var(--spacing-unit); /* Gutter between grid items */
-    flex-grow: 1;
-    align-items: start; /* Reset mobile alignment */
-    justify-content: start; /* Reset mobile justification */
-  }
-
-  /* Reset mobile order */
-  #section-fractional-leadership { order: unset; }
-  #section-graphic-design { order: unset; }
-  .nav { order: unset; }
-
-  /* Tablet Grid Positioning */
-  #section-fractional-leadership {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  #section-graphic-design {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .nav {
-    grid-column: 1 / span 2;
-    grid-row: 2;
-    align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: space-between;
-    width: 100%; /* Take full width */
-    margin-top: 0; /* Reset mobile margin */
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    flex: 1;
   }
 }
 
-/* Laptop Styles */
-@media (min-width: 1025px) {
-  :root {
-    --font-size-base: 32px; /* Desktop base font size */
-    --spacing-unit: 20px; /* Desktop spacing unit */
-    --spacing-double: 40px; /* Adjusted double spacing for desktop */
-  }
-
-  .container {
+/* Laptop styles for overlay */
+@media (min-width: var(--breakpoint-laptop)) {
+  .overlay-nav {
+    bottom: var(--spacing-unit);
     width: calc(100vw - var(--spacing-double));
-    flex-grow: 1;
-    margin: var(--spacing-unit);
-  }
-
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: var(--spacing-unit);
-    flex-grow: 1;
-  }
-
-  /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
-  #section-fractional-leadership {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  #section-graphic-design {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .nav {
-    grid-column: 1 / span 2;
-    grid-row: 2;
-    align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: space-between;
-    width: 100%; /* Take full width */
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    flex: 1;
   }
 }
 
-/* Desktop Styles */
-@media (min-width: 1441px) {
-  :root {
-    --font-size-base: 36px; /* Larger font size for desktop */
-    --spacing-unit: 25px; /* Larger spacing for desktop */
-    --spacing-double: 50px; /* Larger double spacing for desktop */
+/* Desktop styles for overlay */
+@media (min-width: var(--breakpoint-desktop)) {
+  .overlay-nav {
+    bottom: var(--spacing-unit);
+    width: calc(100vw - var(--spacing-double));
   }
-  /* Layout inherits from laptop breakpoint */
 }
