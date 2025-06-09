@@ -464,10 +464,11 @@ body.information-open .nav-info h2 .nav-link {
   transition: opacity var(--transition-overlay), background-color var(--transition-overlay), visibility 0s var(--transition-overlay);
   display: none; /* Ensure hidden by default */
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Align content to the top */
   align-items: center;
   z-index: 1000;
   pointer-events: none; /* Ensure non-interactive by default */
+  overflow-y: auto; /* Enable vertical scrolling for overlay content */
 }
 
 body.information-open #information-overlay {
@@ -489,7 +490,12 @@ body.information-open .container {
   opacity: 0;
   transition: opacity var(--transition-overlay);
   color: var(--color-background);
-  text-align: center;
+  text-align: left; /* Align text to the left as per the image */
+  max-width: 1200px; /* Limit overall content width */
+  margin: 0 auto; /* Center content horizontally */
+  padding: 40px 20px; /* Adjust padding for top/bottom and sides */
+  box-sizing: border-box;
+  height: 100%; /* Allow content to take full height for scrolling */
 }
 
 body.information-open .overlay-content {
@@ -523,5 +529,128 @@ body.information-open .overlay-content {
   .overlay-nav {
     bottom: var(--spacing-unit);
     width: calc(100vw - var(--spacing-double));
+  }
+}
+
+.overlay-columns {
+  display: flex;
+  flex-direction: column; /* Stack columns vertically on mobile */
+  gap: var(--spacing-double); /* Spacing between columns */
+  width: 100%;
+}
+
+.overlay-left-column {
+  flex: 1; /* Default for mobile */
+}
+
+.overlay-right-column {
+  flex: 1; /* Default for mobile */
+}
+
+.overlay-section {
+  margin-bottom: var(--spacing-double); /* More spacing between sections */
+}
+
+.overlay-date {
+  font-size: 1rem; /* Smaller font size as per image */
+  color: var(--color-background);
+  margin-bottom: 5px;
+}
+
+.overlay-location {
+  font-size: 1rem; /* Smaller font size as per image */
+  color: var(--color-text-light-gray);
+  margin-bottom: var(--spacing-unit);
+}
+
+.overlay-text {
+  font-size: var(--font-size-large);
+  color: var(--color-text-gray);
+  line-height: 1.1; /* Fine-tune line height */
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: var(--spacing-unit);
+}
+
+.overlay-image-small {
+  max-width: 100px; /* Adjust size as seen in the image */
+  height: auto;
+  display: block;
+  margin-bottom: var(--spacing-double); /* Spacing below the image */
+}
+
+.overlay-bio-text {
+  font-size: var(--font-size-large);
+  color: var(--color-background);
+  line-height: 1.3; /* Adjust line height to match image */
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Tablet styles for overlay layout */
+@media (min-width: var(--breakpoint-tablet)) {
+  .overlay-columns {
+    flex-direction: row; /* Two columns horizontally */
+    gap: var(--spacing-double); /* More spacing for tablet and up */
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .overlay-left-column {
+    flex: 0 0 30%; /* Adjust width for left column */
+  }
+
+  .overlay-right-column {
+    flex: 0 0 60%; /* Adjust width for right column */
+  }
+
+  .overlay-date,
+  .overlay-location {
+    font-size: 1.2rem; /* Adjust for tablet */
+  }
+
+  .overlay-text,
+  .overlay-bio-text {
+    font-size: var(--font-size-large);
+  }
+}
+
+/* Laptop styles for overlay layout */
+@media (min-width: var(--breakpoint-laptop)) {
+  .overlay-left-column {
+    flex: 0 0 25%; /* Further adjust width for larger screens */
+  }
+
+  .overlay-right-column {
+    flex: 0 0 65%; /* Further adjust width for larger screens */
+  }
+
+  .overlay-date,
+  .overlay-location {
+    font-size: 1.2rem; /* Keep consistent or adjust further */
+  }
+
+  .overlay-text,
+  .overlay-bio-text {
+    font-size: 1.3rem; /* Increase for laptop */
+  }
+}
+
+/* Desktop styles for overlay layout */
+@media (min-width: var(--breakpoint-desktop)) {
+  .overlay-left-column {
+    flex: 0 0 20%; /* Even further adjust width for very large screens */
+  }
+
+  .overlay-right-column {
+    flex: 0 0 70%; /* Even further adjust width for very large screens */
+  }
+
+  .overlay-date,
+  .overlay-location {
+    font-size: 1.3rem; /* Adjust for desktop */
+  }
+
+  .overlay-text,
+  .overlay-bio-text {
+    font-size: 1.4rem; /* Increase for desktop */
   }
 }

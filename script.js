@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Let CSS handle display, visibility, and pointer-events
 
     // Update URL to denote that the information layer is revealed
-    // (This will be implemented in a future task based on issue #4)
+    window.location.hash = 'information';
   }
 
   function closeInformationOverlay() {
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Let CSS handle display, visibility, and pointer-events after transition
 
     // Update URL to remove information layer indicator
-    // (This will be implemented in a future task based on issue #4)
+    history.replaceState(null, '', window.location.pathname); // Remove hash
   }
 
   // Event listener for opening the information overlay
@@ -308,5 +308,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   console.log('Setting up close button listener. closeButton is:', closeButton);
+
+  // Check URL hash on page load to open overlay if needed
+  if (window.location.hash === '#information') {
+    openInformationOverlay();
+  }
+
   // --------------------------------
 }); 
