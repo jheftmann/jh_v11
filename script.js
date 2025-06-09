@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set to true to disable animations and show all content immediately for styling.
   // Set to false for normal behavior.
   const testMode = false;
+  //const testMode = true;
   // ------------------------
 
   // Store original HTML content for all .content sections from the HTML
@@ -147,10 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
       } else if (testMode) {
            console.log('Click handler: Toggling section in test mode.');
-           // In test mode, clicking toggles the state
-           setSectionOpenState(section, firstContentElement.hidden); // Toggle based on current hidden state
+           // In test mode, toggle based on is-open class instead of hidden state
+           const isCurrentlyOpen = section.classList.contains('is-open');
+           setSectionOpenState(section, !isCurrentlyOpen);
            // If opening in test mode, restore content immediately
-           if (!firstContentElement.hidden) {
+           if (!isCurrentlyOpen) {
                 firstContentElement.innerHTML = fullHTMLContent;
            }
       } else if (!firstContentElement.hidden) {
