@@ -358,7 +358,6 @@ body.information-open .nav-item > * {
 
 /* Hide .nav-home (Jacob's name) when overlay is open */
 body.information-open .nav-home {
-  pointer-events: none;
   /* transition property already on .nav-item */
   will-change: opacity;
 }
