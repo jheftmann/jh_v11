@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set to true to disable animations and show all content immediately for styling.
   // Set to false for normal behavior.
   const testMode = false;
-  //const testMode = true;
+  // const testMode = true;
   // ------------------------
 
   // Store original HTML content for all .content sections from the HTML

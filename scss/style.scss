@@ -189,6 +189,11 @@ body.information-open .nav {
 /* Adjust text indent for content blocks on mobile if desired */
 .expandable-section > .content {
   text-indent: 1em; /* Slightly smaller indent for mobile */
+  color: $color-text-gray;
+}
+
+span.sub-content {
+  display: inline-block;
 }
 
 /* Tablet Styles */
@@ -365,6 +370,13 @@ body.information-open .nav {
 .content {
   margin: $spacing-none;
   padding: $spacing-none;
+  text-indent: $spacing-indent; /* Add default text indent */
+}
+
+/* Override text-indent for specific cases where we don't want it */
+.overlay-content .content,
+.overlay-section-col2 .content {
+  // text-indent: 0; /* Remove text indent for overlay content */
 }
 
 /* Shared nav item styles */
@@ -398,7 +410,7 @@ body.information-open .nav-item * {
 }
 
 .close-button {
-  position: absolute;
+  // position: absolute;
   top: 0px;
   right: 0px;
   font-size: 30px; /* Adjust as needed for visual size */
@@ -407,6 +419,8 @@ body.information-open .nav-item * {
   display: none; /* Hidden by default */
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
   z-index: 1002; /* Ensure it's above nav */
+  float: right;
+  margin-left: $spacing-base;
 }
 
 body.information-open .close-button {
@@ -428,7 +442,7 @@ body.information-open .nav-info h2 .nav-link {
 }
 
 .expandable-section > .content {
-  margin-bottom: $spacing-double;
+  // margin-bottom: $spacing-double;
   text-indent: $spacing-indent; /* Apply text indent to main content blocks */
 }
 
@@ -614,14 +628,13 @@ body.information-open .overlay-gradient-bottom {
 @media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: 60px; /* Specific gap for tablet */
+    gap: 0px; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }
 
   .overlay-left-column {
     flex: 5; /* Fixed width for left column */
-    max-width: 250px; /* Ensure it doesn't grow too wide */
   }
 
   .overlay-gap-column {
@@ -657,78 +670,77 @@ body.information-open .overlay-gradient-bottom {
     line-height: 1.4; /* Explicit line-height */
   }
 
-  .overlay-section-col2 p,
-  .overlay-bio-text {
+  .overlay-section-col2 p {
     font-size: 16px; /* Adjust for tablet */
   }
 
-  .overlay-image-small {
-    max-width: 80px; /* Larger image size for tablet */
+  .overlay-left-column img {
+    width: 100%; /* Larger image size for tablet */
   }
 }
 
 /* Laptop styles for overlay layout */
 @media (min-width: 1025px) {
-  .overlay-columns {
-    gap: 100px; /* Larger gap for laptop */
-  }
+  // .overlay-columns {
+  //   gap: 100px; /* Larger gap for laptop */
+  // }
 
-  .overlay-left-column {
-    flex: 0 0 240px; /* Adjusted fixed width for laptop */
-    max-width: 240px;
-  }
+  // .overlay-left-column {
+  //   flex: 0 0 240px; /* Adjusted fixed width for laptop */
+  //   max-width: 240px;
+  // }
 
-  .overlay-section {
-    gap: 30px; /* Larger spacing for inner columns */
-  }
+  // .overlay-section {
+  //   gap: 30px; /* Larger spacing for inner columns */
+  // }
 
-  .overlay-section-col1 {
-    flex: 0 0 110px; /* Adjust width for date/location column */
-  }
+  // .overlay-section-col1 {
+  //   flex: 0 0 110px; /* Adjust width for date/location column */
+  // }
 
-  .overlay-section-col3 {
-    flex: 0 0 100px; /* Adjust width for image column */
-  }
+  // .overlay-section-col3 {
+  //   flex: 0 0 100px; /* Adjust width for image column */
+  // }
 
-  .overlay-section-col2 p,
-  .overlay-bio-text {
-    font-size: 18px; /* Larger font size for laptop */
-  }
+  // .overlay-section-col2 p,
+  // .overlay-bio-text {
+  //   font-size: 18px; /* Larger font size for laptop */
+  // }
 
-  .overlay-image-small {
-    max-width: 100px; /* Larger image size for laptop */
-  }
+  // .overlay-image-small {
+  //   max-width: 100px; /* Larger image size for laptop */
+  // }
 }
 
 /* Desktop styles for overlay layout */
 @media (min-width: 1441px) {
-  .overlay-columns {
-    gap: 120px; /* Even larger gap for desktop */
-  }
+  // .overlay-columns {
+  //   gap: 120px; /* Even larger gap for desktop */
+  // }
 
-  .overlay-left-column {
-    flex: 0 0 280px; /* Adjusted fixed width for desktop */
-    max-width: 280px;
-  }
+  // .overlay-left-column {
+  //   flex: 0 0 280px; /* Adjusted fixed width for desktop */
+  //   max-width: 280px;
+  // }
 
-  .overlay-section {
-    gap: 40px; /* Even larger spacing for inner columns */
-  }
+  // .overlay-section {
+  //   gap: 40px; /* Even larger spacing for inner columns */
+  // }
 
-  .overlay-section-col1 {
-    flex: 0 0 130px; /* Adjust width for date/location column */
-  }
+  // .overlay-section-col1 {
+  //   flex: 0 0 130px; /* Adjust width for date/location column */
+  // }
 
-  .overlay-section-col3 {
-    flex: 0 0 120px; /* Adjust width for image column */
-  }
+  // .overlay-section-col3 {
+  //   flex: 0 0 120px; /* Adjust width for image column */
+  // }
 
-  .overlay-section-col2 p,
-  .overlay-bio-text {
-    font-size: 20px; /* Largest font size for desktop */
-  }
+  // .overlay-section-col2 p,
+  // .overlay-bio-text {
+  //   font-size: 20px; /* Largest font size for desktop */
+  // }
 
-  .overlay-image-small {
-    max-width: 120px; /* Largest image size for desktop */
-  }
+  // .overlay-image-small {
+  //   max-width: 120px; /* Largest image size for desktop */
+  //}
 }
