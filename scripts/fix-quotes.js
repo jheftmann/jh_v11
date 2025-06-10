@@ -1,18 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
-// Function to replace straight quotes with curly quotes
-function replaceQuotes(content) {
-    // Replace straight single quotes with curly single quotes
-    // But don't replace them in HTML tags or attributes
-    return content.replace(/(?<![<"'])'/g, '\u2019');
+// Function to replace straight single quotes with curly single quotes
+function replaceSingleQuotes(text) {
+    return text.replace(/(?<![<"'])'/g, '\u2019');
 }
 
 // Function to process a file
 function processFile(filePath) {
     try {
         const content = fs.readFileSync(filePath, 'utf8');
-        const newContent = replaceQuotes(content);
+        let newContent = content;
+
+        if (filePath.endsWith('.md')) {
+            newContent = replaceSingleQuotes(content);
+        }
         
         if (content !== newContent) {
             fs.writeFileSync(filePath, newContent, 'utf8');
@@ -37,8 +39,8 @@ function walkDir(dir) {
                 walkDir(filePath);
             }
         } else {
-            // Process only HTML and text files
-            if (file.endsWith('.html') || file.endsWith('.txt') || file.endsWith('.md')) {
+            // Process only Markdown files
+            if (file.endsWith('.md')) {
                 processFile(filePath);
             }
         }

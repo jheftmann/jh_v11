@@ -574,7 +574,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-columns {
   display: flex;
   flex-direction: column; /* Stack columns vertically on mobile */
-  gap: $spacing-base; /* Spacing between columns for mobile */
+  gap: $spacing-base / 2; /* Spacing between columns for mobile */
   width: 100%;
 }
 
@@ -631,7 +631,7 @@ body.information-open .overlay-gradient-bottom {
 @media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: $spacing-base; /* Specific gap for tablet */
+    gap: $spacing-base / 2; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }
