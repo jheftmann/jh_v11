@@ -72,7 +72,7 @@ a:hover, a:visited, a:active {
 }
 
 .text-gray {
-  color: #8E8E8E;
+  color: #8A8A8A;
 }
 
 .text-black {
@@ -172,7 +172,7 @@ body.information-open .nav {
 /* Adjust text indent for content blocks on mobile if desired */
 .expandable-section > .content {
   text-indent: 1em; /* Slightly smaller indent for mobile */
-  color: #8E8E8E;
+  color: #8A8A8A;
 }
 
 span.sub-content {

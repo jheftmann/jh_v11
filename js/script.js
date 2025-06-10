@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let i = 0;
     element.textContent = ''; // Clear existing content using textContent
     element.hidden = false; // Make element visible
-    const speed = 20; // Typing speed in milliseconds
+    const speed = 17; // Typing speed in milliseconds
 
     function type() {
       if (i < plainText.length) {
