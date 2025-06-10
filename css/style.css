@@ -10,6 +10,7 @@ body {
   box-sizing: border-box;
   margin: 0; /* Ensure no default browser margins */
   text-box: trim-both cap alphabetic;
+  hyphens: auto; /* Enable automatic hyphenation */
 }
 
 *,
@@ -89,12 +90,6 @@ a:hover, a:visited, a:active {
   margin-right: 0;
 }
 
-sup {
-  font-size: 16px;
-  vertical-align: text-top;
-  margin-left: 5px;
-}
-
 .margin-auto-top {
   margin-top: auto;
 }
@@ -116,6 +111,11 @@ sup {
   gap: 5px; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
+}
+@media (min-width: 769px) {
+  .columns {
+    gap: 20px;
+  }
 }
 
 /* Order for mobile layout */
@@ -146,6 +146,7 @@ sup {
   .nav {
     position: relative;
     bottom: 0;
+    gap: 20px;
   }
 }
 
@@ -259,7 +260,7 @@ span.sub-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-    gap: 5px;
+    gap: 20px;
     flex-grow: 1;
   }
   /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
@@ -531,7 +532,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-section {
   display: flex; /* Enable flexbox for inner columns */
   flex-direction: column; /* Stack columns on mobile */
-  gap: 10px; /* Spacing between inner columns on mobile */
+  gap: 20px; /* Spacing between inner columns on mobile */
   margin-bottom: 30px; /* Spacing between sections */
   align-items: flex-start;
 }
@@ -564,7 +565,7 @@ body.information-open .overlay-gradient-bottom {
 @media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: 0px; /* Specific gap for tablet */
+    gap: 20px; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }

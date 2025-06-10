@@ -11,6 +11,7 @@ body {
   box-sizing: border-box;
   margin: 0; /* Ensure no default browser margins */
   text-box: trim-both cap alphabetic;
+  hyphens: auto; /* Enable automatic hyphenation */
 }
 
 *,
@@ -119,11 +120,11 @@ a {
   margin-right: $spacing-none;
 }
 
-sup {
-  font-size: 16px;
-  vertical-align: text-top;
-  margin-left: $spacing-unit;
-}
+// sup {
+//   font-size: 16px;
+//   vertical-align: text-top;
+//   margin-left: $spacing-unit;
+// }
 
 .margin-auto-top {
   margin-top: auto;
@@ -146,6 +147,10 @@ sup {
   gap: $spacing-unit; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
+
+  @media (min-width: $breakpoint-tablet) {
+    gap: $spacing-base;
+  }
 }
 
 /* Order for mobile layout */
@@ -169,6 +174,7 @@ sup {
   @media (min-width: $breakpoint-tablet) {
     position: relative;
     bottom: 0;
+    gap: $spacing-base;
   }
 }
 
@@ -291,7 +297,7 @@ span.sub-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-    gap: $spacing-unit;
+    gap: $spacing-base;
     flex-grow: 1;
   }
 
@@ -567,7 +573,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-columns {
   display: flex;
   flex-direction: column; /* Stack columns vertically on mobile */
-  gap: 20px; /* Spacing between columns for mobile */
+  gap: $spacing-base; /* Spacing between columns for mobile */
   width: 100%;
 }
 
@@ -588,7 +594,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-section {
   display: flex; /* Enable flexbox for inner columns */
   flex-direction: column; /* Stack columns on mobile */
-  gap: 10px; /* Spacing between inner columns on mobile */
+  gap: $spacing-base; /* Spacing between inner columns on mobile */
   margin-bottom: $spacing-double; /* Spacing between sections */
   align-items: flex-start;
 }
@@ -627,7 +633,7 @@ body.information-open .overlay-gradient-bottom {
 @media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: 0px; /* Specific gap for tablet */
+    gap: $spacing-base; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }
@@ -646,7 +652,7 @@ body.information-open .overlay-gradient-bottom {
 
   .overlay-section {
     flex-direction: row; /* Three columns horizontally for tablet */
-    gap: 20px; /* Spacing between inner columns */
+    gap: $spacing-base; /* Spacing between inner columns */
     align-items: flex-start;
     justify-content: space-between; /* Distribute items with space */
   }
