@@ -27,6 +27,9 @@ jobs:
       - name: Build CSS
         run: npm run build:sass
 
+      - name: Verify CSS output
+        run: ls -l css/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
