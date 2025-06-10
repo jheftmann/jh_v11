@@ -1,0 +1,617 @@
+@font-face {
+  font-family: "ABCDiatype Medium";
+  src: url("../_assets/ABCDiatype-Medium-Trial.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+html,
+body {
+  height: 100%; /* Ensure html and body take full viewport height */
+  box-sizing: border-box;
+  margin: 0; /* Ensure no default browser margins */
+  text-box: trim-both cap alphabetic;
+  hyphens: auto; /* Enable automatic hyphenation */
+  overflow-y: auto; /* Enable scrolling for the document itself */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* Mobile base font size */
+/* Matches mobile base font size */
+/* Mobile spacing unit */
+/* Adjusted double spacing for mobile */
+/* Transition timing */
+body {
+  font-size: 28px;
+  line-height: 110%;
+  letter-spacing: -0.025em;
+  font-family: "ABCDiatype Medium", Helvetica, sans-serif;
+  background: #fff;
+  color: #000000;
+  display: flex; /* Make body a flex container */
+  flex-direction: column; /* Stack children vertically */
+  padding: 20px; /* Consistent 20px padding around the body */
+}
+@media (min-width: 769px) {
+  body {
+    font-size: 28px;
+  }
+}
+@media (min-width: 1025px) {
+  body {
+    font-size: 32px;
+  }
+}
+@media (min-width: 1441px) {
+  body {
+    font-size: 36px;
+  }
+}
+
+body.information-open {
+  overflow: hidden; /* Prevent scrolling of main content when overlay is open */
+}
+
+/* Presentation */
+p, h1, h2, h3, h4, h5, h6 {
+  line-height: 110%;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+}
+a:hover, a:visited, a:active {
+  color: #000000;
+}
+
+.text-large {
+  font-size: 36px;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.text-gray {
+  color: #8A8A8A;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.text-left {
+  text-align: left;
+  margin-left: 0;
+}
+
+.text-right {
+  text-align: right;
+  margin-right: 0;
+}
+
+.margin-auto-top {
+  margin-top: auto;
+}
+
+/* Layout - Mobile First */
+.container {
+  width: auto; /* Take full width within body padding */
+  flex-grow: 1; /* Allow container to take up remaining height */
+  margin: 0; /* Remove existing container margins */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 160px;
+}
+
+.columns {
+  display: flex; /* Flexbox for mobile */
+  flex-direction: column; /* Stack columns vertically */
+  flex-grow: 1; /* Ensure columns take full height on mobile */
+  gap: 10px; /* Vertical spacing */
+  align-items: flex-start; /* Align items to the start of the column */
+  justify-content: flex-start; /* Align items to the start for mobile layout */
+}
+@media (min-width: 769px) {
+  .columns {
+    gap: 20px;
+  }
+}
+
+/* Order for mobile layout */
+#section-fractional-leadership {
+  order: 1;
+}
+
+#section-graphic-design {
+  order: 2;
+}
+
+.nav {
+  order: 3; /* Position .nav at the bottom on mobile */
+  width: 100%; /* Take full width */
+  display: flex;
+  flex-direction: column; /* Stack nav items vertically */
+  align-items: flex-start; /* Align nav items to the start */
+  gap: 5px; /* Add spacing between nav items */
+  margin-top: auto; /* Push .nav to the bottom */
+  z-index: 99999999; /* Ensure it is above other main content */
+  position: relative; /* Needed for z-index to work correctly */
+  pointer-events: auto; /* Default to auto for main nav */
+  transition: color 0.5s ease; /* Transition for text color */
+  position: fixed;
+  bottom: 20px;
+}
+@media (min-width: 769px) {
+  .nav {
+    position: relative;
+    bottom: 0;
+    gap: 20px;
+  }
+}
+
+body.information-open .nav {
+  position: absolute;
+  bottom: 20px; /* Aligned with fixed body padding */
+  left: 20px; /* Aligned with fixed body padding */
+  width: calc(100% - 40px); /* Span width within 20px body padding */
+  z-index: 1001; /* Ensure it is above the overlay content */
+  pointer-events: auto; /* Ensure clickable in overlay */
+  color: #ffffff; /* Change text color for overlay */
+  opacity: 1; /* Ensure the entire nav is fully opaque when overlay is open */
+}
+
+/* Adjust specific component positioning for mobile in stacked layout */
+.expandable-section {
+  width: 100%; /* Take full width in stacked layout */
+}
+
+.nav-home, .nav-info {
+  margin-top: 0; /* Remove specific margin-top for nav items within .nav */
+}
+
+/* Adjust text indent for content blocks on mobile if desired */
+.expandable-section > .content {
+  text-indent: 48px; /* Slightly smaller indent for mobile */
+  color: #8A8A8A;
+}
+
+span.sub-content {
+  display: inline-block;
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) {
+  :root {
+    /* Tablet base font size */
+    /* Tablet spacing unit */
+    /* Adjusted double spacing for tablet */
+  }
+  .container {
+    width: auto; /* Take full width within body padding */
+    flex-grow: 1;
+    margin: 0; /* Remove existing container margins */
+  }
+  .columns {
+    display: grid; /* Use Grid for tablet layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
+    gap: 5px; /* Gutter between grid items */
+    flex-grow: 1;
+    align-items: start; /* Reset mobile alignment */
+    justify-content: start; /* Reset mobile justification */
+  }
+  /* Reset mobile order */
+  #section-fractional-leadership {
+    order: unset;
+  }
+  #section-graphic-design {
+    order: unset;
+  }
+  .nav {
+    order: unset;
+  }
+  /* Tablet Grid Positioning */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .nav {
+    grid-column: 1/span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+    margin-top: 0; /* Reset mobile margin */
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  .nav-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+/* Laptop Styles */
+@media (min-width: 1025px) {
+  :root {
+    /* Desktop base font size */
+    /* Desktop spacing unit */
+    /* Adjusted double spacing for desktop */
+  }
+  .container {
+    width: auto; /* Take full width within body padding */
+    flex-grow: 1;
+    margin: 0; /* Remove existing container margins */
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 10px;
+    flex-grow: 1;
+  }
+  /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .nav {
+    grid-column: 1/span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  .nav-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+/* Desktop Styles */
+@media (min-width: 1441px) {
+  :root {
+    /* Larger font size for desktop */
+    /* Larger spacing for desktop */
+    /* Larger double spacing for desktop */
+  }
+  .container {
+    width: auto; /* Take full width within body padding */
+    margin: 0; /* Remove existing container margins */
+  }
+  /* Layout inherits from laptop breakpoint */
+}
+/* Functional */
+.trigger-and-first-content-container {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+
+.trigger {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.trigger-number-filled {
+  display: none; /* Hidden by default */
+}
+
+/* Show filled number and hide outlined number on hover or when section is open */
+.trigger:hover .trigger-number-outlined,
+.is-open .trigger-number-outlined {
+  display: none;
+}
+
+.trigger:hover .trigger-number-filled,
+.is-open .trigger-number-filled {
+  display: inline; /* Show on hover or when section is open */
+}
+
+.content {
+  margin: 0;
+  padding: 0;
+  text-indent: 60px; /* Add default text indent */
+}
+
+/* Override text-indent for specific cases where we don't want it */
+/* Shared nav item styles */
+.nav-item {
+  /* font-size: $font-size-large; */
+  color: #000000; /* Default text color */
+  display: flex; /* Make nav items flex containers */
+  align-items: flex-start; /* Align items to the start for mobile stacking */
+  pointer-events: auto; /* Ensure clickable by default */
+  opacity: 1; /* Ensure visible by default */
+}
+
+body.information-open .nav-item {
+  color: #ffffff; /* Default text color */
+}
+
+/* Hide .nav-home (Jacob's name) when overlay is open */
+body.information-open .nav-home {
+  will-change: opacity;
+}
+
+/* Ensure .nav-info (Information) remains visible and clickable when overlay is open */
+body.information-open .nav-info {
+  opacity: 1; /* Ensure parent container is opaque */
+  pointer-events: auto;
+  color: #ffffff;
+}
+
+body.information-open .nav-item * {
+  color: #ffffff;
+}
+
+.close-button {
+  top: 0px;
+  right: 0px;
+  font-size: 30px; /* Adjust as needed for visual size */
+  cursor: pointer;
+  color: #ffffff; /* White color for the close button */
+  display: none; /* Hidden by default */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  z-index: 1002; /* Ensure it's above nav */
+  float: right;
+  margin-left: 20px;
+}
+
+body.information-open .close-button {
+  display: block; /* Show when overlay is active */
+  opacity: 1;
+}
+
+body.information-open .nav-info h2 .nav-link {
+  color: #ffffff;
+}
+
+.trigger-and-first-content-container .content {
+  margin-bottom: 5px;
+  text-indent: 60px; /* Default text indent */
+}
+
+.expandable-section > .content {
+  text-indent: 60px; /* Apply text indent to main content blocks */
+}
+
+.expandable-section .content a {
+  color: #000000;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.expandable-section .content a:hover {
+  text-decoration: none;
+}
+
+.expand-link:hover {
+  color: #000000;
+}
+
+.expandable-section .content:last-of-type a {
+  color: #000000;
+}
+
+.is-old-paragraph .expand-link:hover {
+  color: #D5D5D5;
+}
+
+/* Information Overlay Styles */
+#information-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, background-color 0.5s ease, visibility 0s 0.5s ease;
+  display: none; /* Ensure hidden by default */
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top to prevent initial scroll */
+  align-items: center;
+  z-index: 999; /* Changed z-index to be below the gradient */
+  pointer-events: none; /* Ensure non-interactive by default */
+  overflow-y: auto; /* Enable vertical scrolling for overlay content */
+}
+
+body.information-open #information-overlay {
+  opacity: 1;
+  visibility: visible;
+  background-color: #000000;
+  transition: opacity 0.5s ease, background-color 0.5s ease, visibility 0s 0s;
+  display: flex; /* Show when open */
+  pointer-events: auto; /* Enable clicks when open */
+}
+
+body.information-open .container {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none; /* Disable clicks on main container when overlay is open */
+}
+
+.overlay-content {
+  /* opacity: 0; */
+  transition: opacity 0.5s ease;
+  color: #ffffff;
+  text-align: left; /* Align text to the left as per the image */
+  padding: 20px; /* Adjust padding for top/bottom and sides */
+  box-sizing: border-box;
+  padding-bottom: 150px; /* Increased padding to account for fixed gradient */
+}
+
+body.information-open .overlay-content {
+  opacity: 1;
+}
+
+.overlay-gradient-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 175px; /* Height of the gradient band */
+  background: linear-gradient(to top, rgb(255, 255, 255), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0)); /* Gradient from black to transparent */
+  z-index: 1000; /* Above overlay content, below nav */
+  pointer-events: none; /* Allow clicks to pass through to content below if needed */
+}
+
+body.information-open .overlay-gradient-bottom {
+  display: block; /* Show when overlay is open */
+  background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)); /* Gradient from black to transparent */
+}
+
+/* Tablet styles for overlay - adjust positioning and font sizes */
+@media (min-width: 769px) {
+  .overlay-nav {
+    bottom: 5px;
+    width: calc(100vw - 30px);
+  }
+}
+/* Laptop styles for overlay */
+@media (min-width: 1025px) {
+  .overlay-nav {
+    bottom: 5px;
+    width: calc(100vw - 30px);
+  }
+}
+/* Desktop styles for overlay */
+@media (min-width: 1441px) {
+  .overlay-nav {
+    bottom: 5px;
+    width: calc(100vw - 30px);
+  }
+}
+.overlay-columns {
+  display: flex;
+  flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
+  gap: 20px; /* Spacing between columns for mobile */
+  width: 100%;
+}
+
+.overlay-left-column {
+  flex: 5; /* Fixed width for left column */
+}
+
+.overlay-left-column p {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0;
+}
+
+.overlay-right-column {
+  flex: 6; /* Allow right column to take remaining space */
+}
+
+.overlay-right-column p + p {
+  text-indent: 60px;
+}
+
+.overlay-section {
+  display: flex; /* Enable flexbox for inner columns */
+  flex-direction: column; /* Stack columns on mobile */
+  gap: 20px; /* Spacing between inner columns on mobile */
+  margin-bottom: 30px; /* Spacing between sections */
+  align-items: flex-start;
+}
+
+.overlay-section-col1 {
+  /* Date and location column */
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.overlay-section-col2 {
+  /* Text content column */
+  flex: 1;
+}
+
+.overlay-section-col3 {
+  /* Image column */
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex; /* Use flex to align image if needed */
+  justify-content: flex-end; /* Align image to the right */
+}
+
+.overlay-image-small {
+  height: auto;
+  display: block;
+}
+
+/* Tablet styles for overlay layout */
+@media (min-width: 769px) {
+  .overlay-columns {
+    flex-direction: row; /* Two columns horizontally */
+    gap: 10px; /* Specific gap for tablet */
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .overlay-left-column {
+    flex: 5; /* Fixed width for left column */
+  }
+  .overlay-gap-column {
+    flex: 1; /* Fixed width for left column */
+  }
+  .overlay-right-column {
+    flex: 6; /* Allow right column to take remaining space */
+  }
+  .overlay-section {
+    flex-direction: row; /* Three columns horizontally for tablet */
+    gap: 20px; /* Spacing between inner columns */
+    align-items: flex-start;
+    justify-content: space-between; /* Distribute items with space */
+  }
+  .overlay-section-col1 {
+    flex: 1;
+  }
+  .overlay-section-col2 {
+    flex: 3;
+    padding-right: 60px;
+  }
+  .overlay-section-col3 {
+    flex: 1;
+  }
+  .overlay-left-column img {
+    width: 100%; /* Larger image size for tablet */
+  }
+}
+/* Laptop styles for overlay layout */
+/* Desktop styles for overlay layout */
+
+/*# sourceMappingURL=style.css.map */
