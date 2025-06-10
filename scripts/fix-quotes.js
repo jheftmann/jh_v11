@@ -1,0 +1,52 @@
+const fs = require('fs');
+const path = require('path');
+
+// Function to replace straight quotes with curly quotes
+function replaceQuotes(content) {
+    // Replace straight single quotes with curly single quotes
+    // But don't replace them in HTML tags or attributes
+    return content.replace(/(?<![<"'])'/g, '\u2019');
+}
+
+// Function to process a file
+function processFile(filePath) {
+    try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        const newContent = replaceQuotes(content);
+        
+        if (content !== newContent) {
+            fs.writeFileSync(filePath, newContent, 'utf8');
+            console.log(`Updated quotes in: ${filePath}`);
+        }
+    } catch (error) {
+        console.error(`Error processing ${filePath}:`, error);
+    }
+}
+
+// Function to walk through directory
+function walkDir(dir) {
+    const files = fs.readdirSync(dir);
+    
+    files.forEach(file => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        
+        if (stat.isDirectory()) {
+            // Skip node_modules and .git directories
+            if (file !== 'node_modules' && file !== '.git') {
+                walkDir(filePath);
+            }
+        } else {
+            // Process only HTML and text files
+            if (file.endsWith('.html') || file.endsWith('.txt') || file.endsWith('.md')) {
+                processFile(filePath);
+            }
+        }
+    });
+}
+
+// Start processing from the current directory
+const rootDir = process.cwd();
+console.log('Starting quote replacement...');
+walkDir(rootDir);
+console.log('Finished processing files.'); 
