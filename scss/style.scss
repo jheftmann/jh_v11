@@ -20,7 +20,7 @@ body {
   box-sizing: inherit;
 }
 
-$color-text-gray: #8E8E8E;
+$color-text-gray: #8A8A8A;
 $color-text-gray-light: #D5D5D5;
 $color-true-black: #000000;
 $color-true-white: #ffffff;
@@ -38,12 +38,13 @@ $letter-spacing-none: 0;
 $letter-spacing-base: -.025em;
 $line-height-base: 110%;
 $line-height-plus: 120%;
+$text-indent-base: 60px;
+$text-indent-sm: 48px;
 
 $spacing-unit: 5px;
 $spacing-base: 20px;
 $spacing-base-sm: 15px; /* Mobile spacing unit */
 $spacing-double: 30px; /* Adjusted double spacing for mobile */
-$spacing-indent: 60px;
 $spacing-none: 0;
 
 $page-bottom: 100px;
@@ -203,7 +204,7 @@ body.information-open .nav {
 
 /* Adjust text indent for content blocks on mobile if desired */
 .expandable-section > .content {
-  text-indent: 1em; /* Slightly smaller indent for mobile */
+  text-indent: $text-indent-sm; /* Slightly smaller indent for mobile */
   color: $color-text-gray;
 }
 
@@ -385,7 +386,7 @@ span.sub-content {
 .content {
   margin: $spacing-none;
   padding: $spacing-none;
-  text-indent: $spacing-indent; /* Add default text indent */
+  text-indent: $text-indent-base; /* Add default text indent */
 }
 
 /* Override text-indent for specific cases where we don't want it */
@@ -453,12 +454,12 @@ body.information-open .nav-info h2 .nav-link {
 
 .trigger-and-first-content-container .content {
   margin-bottom: $spacing-unit;
-  text-indent: $spacing-indent; /* Default text indent */
+  text-indent: $text-indent-base; /* Default text indent */
 }
 
 .expandable-section > .content {
   // margin-bottom: $spacing-double;
-  text-indent: $spacing-indent; /* Apply text indent to main content blocks */
+  text-indent: $text-indent-base; /* Apply text indent to main content blocks */
 }
 
 .expandable-section .content a {
@@ -591,6 +592,10 @@ body.information-open .overlay-gradient-bottom {
   flex: 6; /* Allow right column to take remaining space */
 }
 
+.overlay-right-column p + p {
+  text-indent: $text-indent-base;
+}
+
 .overlay-section {
   display: flex; /* Enable flexbox for inner columns */
   flex-direction: column; /* Stack columns on mobile */
@@ -616,13 +621,6 @@ body.information-open .overlay-gradient-bottom {
   flex-grow: 0;
   display: flex; /* Use flex to align image if needed */
   justify-content: flex-end; /* Align image to the right */
-}
-
-.overlay-left-column p {
-
-}
-
-.overlay-section-col2 p {
 }
 
 .overlay-image-small {
