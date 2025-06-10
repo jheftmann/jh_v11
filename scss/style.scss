@@ -468,6 +468,10 @@ body.information-open .nav-info h2 .nav-link {
   cursor: pointer;
 }
 
+.expandable-section .content a:hover {
+  text-decoration: none;
+}
+
 .expand-link:hover {
   color: $color-true-black;
 }
