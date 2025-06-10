@@ -289,10 +289,14 @@ document.addEventListener('DOMContentLoaded', function() {
     history.replaceState(null, '', window.location.pathname); // Remove hash
   }
 
-  // Event listener for opening the information overlay via nav-info link
+  // Event listener for opening/closing the information overlay via nav-info link
   navInfoLink.addEventListener('click', function(e) {
     e.preventDefault(); // Prevent default anchor behavior
-    openInformationOverlay();
+    if (document.body.classList.contains('information-open')) {
+      closeInformationOverlay();
+    } else {
+      openInformationOverlay();
+    }
   });
 
   // New: Event listener for any link with the data-attribute 'data-open-information-overlay'
