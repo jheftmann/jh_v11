@@ -1,0 +1,698 @@
+@font-face {
+  font-family: 'ABCDiatype Medium';
+  src: url('../_assets/ABCDiatype-Medium-Trial.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%; /* Ensure html and body take full viewport height */
+  box-sizing: border-box;
+  margin: 0; /* Ensure no default browser margins */
+  text-box: trim-both cap alphabetic;
+  hyphens: auto; /* Enable automatic hyphenation */
+  overflow-y: auto; /* Enable scrolling for the document itself */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+$color-text-gray: #8A8A8A;
+$color-text-gray-light: #D5D5D5;
+$color-true-black: #000000;
+$color-true-white: #ffffff;
+$color-background-base: #fff;
+$color-background-inverted: #000;
+
+$font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
+$font-size-sm: 12px;
+$font-size-lg: 36px;
+$font-size-base: 28px;
+$font-size-laptop: 32px; /* Mobile base font size */
+$font-size-desktop: 36px; /* Matches mobile base font size */
+
+$letter-spacing-none: 0;
+$letter-spacing-base: -.025em;
+$line-height-base: 110%;
+$line-height-plus: 120%;
+$text-indent-base: 60px;
+$text-indent-sm: 48px;
+
+$spacing-unit: 5px;
+$spacing-base-half: 10px;
+$spacing-base: 20px;
+$spacing-base-sm: 15px; /* Mobile spacing unit */
+$spacing-double: 30px; /* Adjusted double spacing for mobile */
+$spacing-none: 0;
+
+$page-bottom: 100px;
+
+/* Transition timing */
+$transition-overlay: 0.5s ease;
+
+$breakpoint-tablet: 769px;
+$breakpoint-laptop: 1025px;
+$breakpoint-desktop: 1441px;
+
+body {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  letter-spacing: $letter-spacing-base;
+  font-family: $font-family-primary;
+  background: $color-background-base;
+  color: $color-true-black;
+  display: flex; /* Make body a flex container */
+  flex-direction: column; /* Stack children vertically */
+  padding: $spacing-base; /* Consistent 20px padding around the body */
+  // background-color: red;
+
+  @media (min-width: $breakpoint-tablet) {
+    font-size: $font-size-base;
+  }
+
+  @media (min-width: $breakpoint-laptop) {
+    font-size: $font-size-laptop;
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    font-size: $font-size-desktop;
+  }
+}
+
+body.information-open {
+  overflow: hidden; /* Prevent scrolling of main content when overlay is open */
+}
+
+/* Presentation */
+p, h1, h2, h3, h4, h5, h6 {
+  line-height: $line-height-base;
+}
+
+a {
+  color: $color-true-black;
+  text-decoration: none;
+
+  &:hover, &:visited, &:active {
+    color: $color-true-black;
+  }
+}
+
+.text-large {
+  font-size: $font-size-lg;
+}
+
+.text-small {
+  font-size: $font-size-sm;
+}
+
+.text-gray {
+  color: $color-text-gray;
+}
+
+.text-black {
+  color: $color-true-black;
+}
+
+.text-left {
+  text-align: left;
+  margin-left: $spacing-none;
+}
+
+.text-right {
+  text-align: right;
+  margin-right: $spacing-none;
+}
+
+// sup {
+//   font-size: 16px;
+//   vertical-align: text-top;
+//   margin-left: $spacing-unit;
+// }
+
+.margin-auto-top {
+  margin-top: auto;
+}
+
+/* Layout - Mobile First */
+.container {
+  width: auto; /* Take full width within body padding */
+  flex-grow: 1; /* Allow container to take up remaining height */
+  margin: 0; /* Remove existing container margins */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 160px;
+}
+
+.columns {
+  display: flex; /* Flexbox for mobile */
+  flex-direction: column; /* Stack columns vertically */
+  flex-grow: 1; /* Ensure columns take full height on mobile */
+  gap: $spacing-base-half; /* Vertical spacing */
+  align-items: flex-start; /* Align items to the start of the column */
+  justify-content: flex-start; /* Align items to the start for mobile layout */
+
+  @media (min-width: $breakpoint-tablet) {
+    gap: $spacing-base;
+  }
+}
+
+/* Order for mobile layout */
+#section-fractional-leadership { order: 1; }
+#section-graphic-design { order: 2; }
+.nav {
+  order: 3; /* Position .nav at the bottom on mobile */
+  width: 100%; /* Take full width */
+  display: flex;
+  flex-direction: column; /* Stack nav items vertically */
+  align-items: flex-start; /* Align nav items to the start */
+  gap: $spacing-unit; /* Add spacing between nav items */
+  margin-top: auto; /* Push .nav to the bottom */
+  z-index: 99999999; /* Ensure it is above other main content */
+  position: relative; /* Needed for z-index to work correctly */
+  pointer-events: auto; /* Default to auto for main nav */
+  transition: color $transition-overlay; /* Transition for text color */
+  position: fixed;
+  bottom: 20px;
+
+  @media (min-width: $breakpoint-tablet) {
+    position: relative;
+    bottom: 0;
+    gap: $spacing-base;
+  }
+}
+
+body.information-open .nav {
+  position: absolute;
+  bottom: 20px; /* Aligned with fixed body padding */
+  left: 20px; /* Aligned with fixed body padding */
+  width: calc(100% - 40px); /* Span width within 20px body padding */
+  z-index: 1001; /* Ensure it is above the overlay content */
+  pointer-events: auto; /* Ensure clickable in overlay */
+  color: $color-true-white; /* Change text color for overlay */
+  opacity: 1; /* Ensure the entire nav is fully opaque when overlay is open */
+}
+
+/* Adjust specific component positioning for mobile in stacked layout */
+.expandable-section {
+  width: 100%; /* Take full width in stacked layout */
+}
+
+.expandable-section:last-of-type {
+}
+
+.nav-home, .nav-info {
+  margin-top: 0; /* Remove specific margin-top for nav items within .nav */
+}
+
+/* Adjust text indent for content blocks on mobile if desired */
+.expandable-section > .content {
+  text-indent: $text-indent-sm; /* Slightly smaller indent for mobile */
+  color: $color-text-gray;
+}
+
+span.sub-content {
+  display: inline-block;
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) {
+  :root {
+    $font-size-base: 24px; /* Tablet base font size */
+    $spacing-unit: 15px; /* Tablet spacing unit */
+    $spacing-double: 30px; /* Adjusted double spacing for tablet */
+  }
+
+  .container {
+    width: auto; /* Take full width within body padding */
+    flex-grow: 1;
+    margin: 0; /* Remove existing container margins */
+  }
+
+  .columns {
+    display: grid; /* Use Grid for tablet layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
+    gap: $spacing-unit; /* Gutter between grid items */
+    flex-grow: 1;
+    align-items: start; /* Reset mobile alignment */
+    justify-content: start; /* Reset mobile justification */
+  }
+
+  /* Reset mobile order */
+  #section-fractional-leadership { order: unset; }
+  #section-graphic-design { order: unset; }
+  .nav { order: unset; }
+
+  /* Tablet Grid Positioning */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+    margin-top: 0; /* Reset mobile margin */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .nav-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+
+/* Laptop Styles */
+@media (min-width: 1025px) {
+  :root {
+    $font-size-base: 32px; /* Desktop base font size */
+    $spacing-unit: 20px; /* Desktop spacing unit */
+    $spacing-double: 40px; /* Adjusted double spacing for desktop */
+  }
+
+  .container {
+    width: auto; /* Take full width within body padding */
+    flex-grow: 1;
+    margin: 0; /* Remove existing container margins */
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: $spacing-base-half;
+    flex-grow: 1;
+  }
+
+  /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */
+  #section-fractional-leadership {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #section-graphic-design {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .nav {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    align-self: end;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    justify-content: flex-start;
+    width: 100%; /* Take full width */
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .nav-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .nav-info h2 {
+    text-align: right; /* Ensure text is right-aligned within h2 */
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1441px) {
+  :root {
+    $font-size-base: 36px; /* Larger font size for desktop */
+    $spacing-unit: 25px; /* Larger spacing for desktop */
+    $spacing-double: 50px; /* Larger double spacing for desktop */
+  }
+
+  .container {
+    width: auto; /* Take full width within body padding */
+    margin: 0; /* Remove existing container margins */
+  }
+  /* Layout inherits from laptop breakpoint */
+}
+
+/* Functional */
+.trigger-and-first-content-container {
+  display: inline-block;
+  vertical-align: top;
+  margin: $spacing-none;
+  padding: $spacing-none;
+}
+
+.trigger {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.trigger-number-filled {
+    display: none; /* Hidden by default */
+}
+
+/* Show filled number and hide outlined number on hover or when section is open */
+.trigger:hover .trigger-number-outlined,
+.is-open .trigger-number-outlined {
+    display: none;
+}
+
+.trigger:hover .trigger-number-filled,
+.is-open .trigger-number-filled {
+    display: inline; /* Show on hover or when section is open */
+}
+
+.content {
+  margin: $spacing-none;
+  padding: $spacing-none;
+  text-indent: $text-indent-base; /* Add default text indent */
+}
+
+/* Override text-indent for specific cases where we don't want it */
+.overlay-content .content,
+.overlay-section-col2 .content {
+  // text-indent: 0; /* Remove text indent for overlay content */
+}
+
+/* Shared nav item styles */
+.nav-item {
+  /* font-size: $font-size-large; */
+  color: $color-true-black; /* Default text color */
+  display: flex; /* Make nav items flex containers */
+  align-items: flex-start; /* Align items to the start for mobile stacking */
+  pointer-events: auto; /* Ensure clickable by default */
+  opacity: 1; /* Ensure visible by default */
+}
+
+body.information-open .nav-item {
+  color: $color-true-white; /* Default text color */
+}
+
+/* Hide .nav-home (Jacob's name) when overlay is open */
+body.information-open .nav-home {
+  will-change: opacity;
+}
+
+/* Ensure .nav-info (Information) remains visible and clickable when overlay is open */
+body.information-open .nav-info {
+  opacity: 1; /* Ensure parent container is opaque */
+  pointer-events: auto;
+  color: $color-true-white;
+}
+
+body.information-open .nav-item * {
+  color: $color-true-white;
+}
+
+.close-button {
+  // position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 30px; /* Adjust as needed for visual size */
+  cursor: pointer;
+  color: $color-true-white; /* White color for the close button */
+  display: none; /* Hidden by default */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  z-index: 1002; /* Ensure it's above nav */
+  float: right;
+  margin-left: $spacing-base;
+}
+
+body.information-open .close-button {
+  display: block; /* Show when overlay is active */
+  opacity: 1;
+}
+
+body.information-open .nav-info h2 .nav-link {
+  color: $color-true-white;
+}
+
+.expandable-section {
+  // margin-bottom: $spacing-double;
+}
+
+.trigger-and-first-content-container .content {
+  margin-bottom: $spacing-unit;
+  text-indent: $text-indent-base; /* Default text indent */
+}
+
+.expandable-section > .content {
+  // margin-bottom: $spacing-double;
+  text-indent: $text-indent-base; /* Apply text indent to main content blocks */
+}
+
+.expandable-section .content a {
+  color: $color-true-black;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.expandable-section .content a:hover {
+  text-decoration: none;
+}
+
+.expand-link:hover {
+  color: $color-true-black;
+}
+
+.expandable-section .content:last-of-type a {
+  color: $color-true-black;
+}
+
+.is-old-paragraph .expand-link:hover {
+  color: $color-text-gray-light;
+}
+
+/* Information Overlay Styles */
+#information-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-overlay, background-color $transition-overlay, visibility 0s $transition-overlay;
+  display: none; /* Ensure hidden by default */
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top to prevent initial scroll */
+  align-items: center;
+  z-index: 999; /* Changed z-index to be below the gradient */
+  pointer-events: none; /* Ensure non-interactive by default */
+  overflow-y: auto; /* Enable vertical scrolling for overlay content */
+}
+
+body.information-open #information-overlay {
+  opacity: 1;
+  visibility: visible;
+  background-color: $color-true-black;
+  transition: opacity $transition-overlay, background-color $transition-overlay, visibility 0s 0s;
+  display: flex; /* Show when open */
+  pointer-events: auto; /* Enable clicks when open */
+}
+
+body.information-open .container {
+  opacity: 0;
+  transition: opacity $transition-overlay;
+  pointer-events: none; /* Disable clicks on main container when overlay is open */
+}
+
+.overlay-content {
+  /* opacity: 0; */
+  transition: opacity $transition-overlay;
+  color: $color-true-white;
+  text-align: left; /* Align text to the left as per the image */
+  padding: 20px; /* Adjust padding for top/bottom and sides */
+  box-sizing: border-box;
+  padding-bottom: 150px; /* Increased padding to account for fixed gradient */
+}
+
+body.information-open .overlay-content {
+  opacity: 1;
+}
+
+.overlay-gradient-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 175px; /* Height of the gradient band */
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, .9), rgba(255, 255, 255, 0)); /* Gradient from black to transparent */
+  z-index: 1000; /* Above overlay content, below nav */
+  pointer-events: none; /* Allow clicks to pass through to content below if needed */
+  
+}
+
+body.information-open .overlay-gradient-bottom {
+  display: block; /* Show when overlay is open */
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, .9), rgba(0, 0, 0, 0)); /* Gradient from black to transparent */
+  // display: none; /* Hidden by default */
+}
+
+/* Tablet styles for overlay - adjust positioning and font sizes */
+@media (min-width: 769px) {
+  .overlay-nav {
+    bottom: $spacing-unit;
+    width: calc(100vw - $spacing-double);
+  }
+}
+
+/* Laptop styles for overlay */
+@media (min-width: 1025px) {
+  .overlay-nav {
+    bottom: $spacing-unit;
+    width: calc(100vw - $spacing-double);
+  }
+}
+
+/* Desktop styles for overlay */
+@media (min-width: 1441px) {
+  .overlay-nav {
+    bottom: $spacing-unit;
+    width: calc(100vw - $spacing-double);
+  }
+}
+
+.overlay-columns {
+  display: flex;
+  flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
+  gap: $spacing-base; /* Spacing between columns for mobile */
+  width: 100%;
+}
+
+.overlay-left-column {
+  flex: 5; /* Fixed width for left column */
+}
+
+.overlay-left-column p {
+  font-size: $font-size-sm;
+  line-height: $line-height-plus;
+  letter-spacing: $letter-spacing-none;
+}
+
+.overlay-right-column {
+  flex: 6; /* Allow right column to take remaining space */
+}
+
+.overlay-right-column p + p {
+  text-indent: $text-indent-base;
+}
+
+.overlay-section {
+  display: flex; /* Enable flexbox for inner columns */
+  flex-direction: column; /* Stack columns on mobile */
+  gap: $spacing-base; /* Spacing between inner columns on mobile */
+  margin-bottom: $spacing-double; /* Spacing between sections */
+  align-items: flex-start;
+}
+
+.overlay-section-col1 {
+  /* Date and location column */
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.overlay-section-col2 {
+  /* Text content column */
+  flex: 1;
+}
+
+.overlay-section-col3 {
+  /* Image column */
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex; /* Use flex to align image if needed */
+  justify-content: flex-end; /* Align image to the right */
+}
+
+.overlay-image-small {
+  height: auto;
+  display: block;}
+
+/* Tablet styles for overlay layout */
+@media (min-width: 769px) {
+  .overlay-columns {
+    flex-direction: row; /* Two columns horizontally */
+    gap: $spacing-base-half; /* Specific gap for tablet */
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .overlay-left-column {
+    flex: 5; /* Fixed width for left column */
+  }
+
+  .overlay-gap-column {
+    flex: 1; /* Fixed width for left column */
+  }
+
+  .overlay-right-column {
+    flex: 6; /* Allow right column to take remaining space */
+  }
+
+  .overlay-section {
+    flex-direction: row; /* Three columns horizontally for tablet */
+    gap: $spacing-base; /* Spacing between inner columns */
+    align-items: flex-start;
+    justify-content: space-between; /* Distribute items with space */
+  }
+
+  .overlay-section-col1 {
+    flex: 1;
+  }
+
+  .overlay-section-col2 {
+    flex: 3;
+    padding-right: 60px;
+  }
+
+  .overlay-section-col3 {
+    flex: 1;
+  }
+
+  .overlay-left-column p {
+
+  }
+
+  .overlay-left-column img {
+    width: 100%; /* Larger image size for tablet */
+  }
+}
+
+/* Laptop styles for overlay layout */
+@media (min-width: 1025px) {
+
+}
+
+/* Desktop styles for overlay layout */
+@media (min-width: 1441px) {
+
+}
