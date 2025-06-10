@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grant write permissions for the GITHUB_TOKEN to push files
+      pages: write # Grant write permissions for GitHub Pages
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
