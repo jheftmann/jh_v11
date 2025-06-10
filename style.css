@@ -471,7 +471,7 @@ body.information-open .nav-info h2 .nav-link {
   transition: opacity var(--transition-overlay), background-color var(--transition-overlay), visibility 0s var(--transition-overlay);
   display: none; /* Ensure hidden by default */
   flex-direction: column;
-  justify-content: center; /* Align content to the center */
+  justify-content: flex-start; /* Align content to the top to prevent initial scroll */
   align-items: center;
   z-index: 999; /* Changed z-index to be below the gradient */
   pointer-events: none; /* Ensure non-interactive by default */
