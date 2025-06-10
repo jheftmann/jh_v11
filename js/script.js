@@ -80,11 +80,19 @@ document.addEventListener('DOMContentLoaded', function() {
     element.textContent = ''; // Clear existing content using textContent
     element.hidden = false; // Make element visible
     const speed = 17; // Typing speed in milliseconds
+    const mobileBreakpoint = 769; // From $breakpoint-tablet in scss/style.scss
 
     function type() {
       if (i < plainText.length) {
         element.textContent += plainText.charAt(i);
         i++;
+
+        // Scroll into view on mobile only, as new text is added
+        if (window.innerWidth < mobileBreakpoint) {
+          console.log(`Scrolling element: ${element.id || element.className} at width ${window.innerWidth}`);
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         setTimeout(type, speed);
       } else {
         // Animation finished, execute callback with a small delay

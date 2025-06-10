@@ -12,6 +12,7 @@ body {
   margin: 0; /* Ensure no default browser margins */
   text-box: trim-both cap alphabetic;
   hyphens: auto; /* Enable automatic hyphenation */
+  overflow-y: auto; /* Enable scrolling for the document itself */
 }
 
 *,
@@ -79,6 +80,10 @@ body {
   @media (min-width: $breakpoint-desktop) {
     font-size: $font-size-desktop;
   }
+}
+
+body.information-open {
+  overflow: hidden; /* Prevent scrolling of main content when overlay is open */
 }
 
 /* Presentation */
