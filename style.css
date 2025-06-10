@@ -26,8 +26,14 @@ body {
   --color-true-white: #ffffff;
 
   --font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
+  --font-size-small: 12px;
   --font-size-base: 24px; /* Mobile base font size */
-  --font-size-large: 1rem; /* Matches mobile base font size */
+  --font-size-large: 32px; /* Matches mobile base font size */
+
+  --letter-spacing-none: 0;
+  --letter-spacing-base: -.025em;
+  --line-height-base: 110%;
+  --line-height+: 120%;
 
   --spacing-unit-sm: 5px;
   --spacing-unit: 15px; /* Mobile spacing unit */
@@ -35,15 +41,9 @@ body {
   --spacing-indent: 1.5em;
   --spacing-none: 0;
 
-  --letter-spacing-tight: -.025em;
-
-  /* Breakpoint widths */
-  --breakpoint-tablet: 769px;
-  --breakpoint-laptop: 1025px;
-  --breakpoint-desktop: 1441px;
-
   /* Transition timing */
   --transition-overlay: 0.5s ease;
+
 
   /* Default font, line-height, letter-spacing */
   font-size: var(--font-size-base);
@@ -58,6 +58,49 @@ body {
   display: flex; /* Make body a flex container */
   flex-direction: column; /* Stack children vertically */
   padding: 20px; /* Consistent 20px padding around the body */
+}
+
+/* Presentation */
+p {
+  font-size: var(--font-size-large);
+  line-height: 110%;
+  text-box: trim-both cap alphabetic;
+}
+
+.text-large {
+
+}
+
+.text-small {
+  line-height: ;
+}
+
+.text-gray {
+  color: var(--color-text-gray);
+}
+
+.text-black {
+  color: var(--color-true-black);
+}
+
+.text-left {
+  text-align: left;
+  margin-left: var(--spacing-none);
+}
+
+.text-right {
+  text-align: right;
+  margin-right: var(--spacing-none);
+}
+
+sup {
+  font-size: 16px;
+  vertical-align: text-top;
+  margin-left: var(--spacing-unit-sm);
+}
+
+.margin-auto-top {
+  margin-top: auto;
 }
 
 /* Layout - Mobile First */
@@ -266,41 +309,6 @@ body.information-open .nav {
   /* Layout inherits from laptop breakpoint */
 }
 
-/* Presentation */
-.text-large {
-  font-size: var(--font-size-large);
-  line-height: 100%;
-  text-box: trim-both cap alphabetic;
-}
-
-.text-gray {
-  color: var(--color-text-gray);
-}
-
-.text-black {
-  color: var(--color-true-black);
-}
-
-.text-left {
-  text-align: left;
-  margin-left: var(--spacing-none);
-}
-
-.text-right {
-  text-align: right;
-  margin-right: var(--spacing-none);
-}
-
-sup {
-  font-size: 16px;
-  vertical-align: text-top;
-  margin-left: var(--spacing-unit-sm);
-}
-
-.margin-auto-top {
-  margin-top: auto;
-}
-
 /* Functional */
 .trigger-and-first-content-container {
   display: inline-block;
@@ -336,7 +344,7 @@ sup {
 
 /* Shared nav item styles */
 .nav-item {
-  font-size: var(--font-size-large);
+  /* font-size: var(--font-size-large); */
   color: var(--color-true-black); /* Default text color */
   display: flex; /* Make nav items flex containers */
   align-items: flex-start; /* Align items to the start for mobile stacking */
@@ -368,8 +376,8 @@ body.information-open .nav-info .nav-link {
 .nav-home h1,
 .nav-info h2 {
   margin: var(--spacing-none);
-  font-weight: normal;
-  font-size: inherit;
+  /* font-weight: normal; */
+  /* font-size: inherit; */
 }
 
 .nav-link {
@@ -390,7 +398,7 @@ body.information-open .nav-info h2 {
 }
 
 .close-button {
-  font-size: var(--font-size-base);
+  /* font-size: var(--font-size-base); */
   background: none;
   border: none;
   color: var(--color-true-black);
@@ -464,7 +472,7 @@ body.information-open .nav-info h2 .nav-link {
   transition: opacity var(--transition-overlay), background-color var(--transition-overlay), visibility 0s var(--transition-overlay);
   display: none; /* Ensure hidden by default */
   flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
+  justify-content: center; /* Align content to the center */
   align-items: center;
   z-index: 1000;
   pointer-events: none; /* Ensure non-interactive by default */
@@ -487,26 +495,19 @@ body.information-open .container {
 }
 
 .overlay-content {
-  opacity: 0;
+  /* opacity: 0; */
   transition: opacity var(--transition-overlay);
   color: var(--color-background);
   text-align: left; /* Align text to the left as per the image */
-  max-width: 1200px; /* Limit overall content width */
-  margin: 0 auto; /* Center content horizontally */
-  padding: 40px 20px; /* Adjust padding for top/bottom and sides */
+  padding: 20px; /* Adjust padding for top/bottom and sides */
   box-sizing: border-box;
-  height: 100%; /* Allow content to take full height for scrolling */
+  padding-bottom: 100px;
 }
 
 body.information-open .overlay-content {
   opacity: 1;
 }
 
-.overlay-info-text {
-  font-size: var(--font-size-large);
-  color: var(--color-true-black); /* Start black */
-  text-align: right; /* Ensure the text itself is right-aligned */
-}
 
 /* Tablet styles for overlay - adjust positioning and font sizes */
 @media (min-width: var(--breakpoint-tablet)) {
@@ -535,7 +536,7 @@ body.information-open .overlay-content {
 .overlay-columns {
   display: flex;
   flex-direction: column; /* Stack columns vertically on mobile */
-  gap: var(--spacing-double); /* Spacing between columns */
+  gap: 20px; /* Spacing between columns for mobile */
   width: 100%;
 }
 
@@ -548,109 +549,95 @@ body.information-open .overlay-content {
 }
 
 .overlay-section {
-  margin-bottom: var(--spacing-double); /* More spacing between sections */
+  display: flex; /* Enable flexbox for inner columns */
+  flex-direction: column; /* Stack columns on mobile */
+  gap: 10px; /* Spacing between inner columns on mobile */
+  margin-bottom: var(--spacing-double); /* Spacing between sections */
+  align-items: flex-start;
 }
 
-.overlay-date {
-  font-size: 1rem; /* Smaller font size as per image */
-  color: var(--color-background);
-  margin-bottom: 5px;
+.overlay-section-col1 {
+  /* Date and location column */
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
-.overlay-location {
-  font-size: 1rem; /* Smaller font size as per image */
-  color: var(--color-text-light-gray);
-  margin-bottom: var(--spacing-unit);
+.overlay-section-col2 {
+  /* Text content column */
+  flex: 1;
 }
 
-.overlay-text {
-  font-size: var(--font-size-large);
-  color: var(--color-text-gray);
-  line-height: 1.1; /* Fine-tune line height */
-  letter-spacing: var(--letter-spacing-tight);
-  margin-bottom: var(--spacing-unit);
-}
-
-.overlay-image-small {
-  max-width: 100px; /* Adjust size as seen in the image */
-  height: auto;
-  display: block;
-  margin-bottom: var(--spacing-double); /* Spacing below the image */
-}
-
-.overlay-bio-text {
-  font-size: var(--font-size-large);
-  color: var(--color-background);
-  line-height: 1.3; /* Adjust line height to match image */
-  letter-spacing: var(--letter-spacing-tight);
+.overlay-section-col3 {
+  /* Image column */
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex; /* Use flex to align image if needed */
+  justify-content: flex-end; /* Align image to the right */
 }
 
 /* Tablet styles for overlay layout */
-@media (min-width: var(--breakpoint-tablet)) {
+@media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: var(--spacing-double); /* More spacing for tablet and up */
+    gap: 20px; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }
 
   .overlay-left-column {
-    flex: 0 0 30%; /* Adjust width for left column */
+    flex: 5; /* Fixed width for left column */
+    max-width: ; /* Ensure it doesn't grow too wide */
+  }
+
+  .overlay-gap-column {
+    flex: 1; /* Fixed width for left column */
+    max-width: ; /* Ensure it doesn't grow too wide */
   }
 
   .overlay-right-column {
-    flex: 0 0 60%; /* Adjust width for right column */
+    flex: 6; /* Allow right column to take remaining space */
   }
 
-  .overlay-date,
-  .overlay-location {
-    font-size: 1.2rem; /* Adjust for tablet */
+  .overlay-section {
+    flex-direction: row; /* Three columns horizontally for tablet */
+    gap: 20px; /* Spacing between inner columns */
+    align-items: flex-start;
+    justify-content: space-between; /* Distribute items with space */
   }
 
-  .overlay-text,
-  .overlay-bio-text {
-    font-size: var(--font-size-large);
+  .overlay-section-col1 {
+    flex: 1;
   }
+
+  .overlay-section-col2 {
+    flex: 3;
+    padding-right: 60px;
+  }
+
+  .overlay-section-col3 {
+    flex: 1
+  }
+
+  .overlay-left-column p {
+    font-size: 12px;
+  }
+
+  .overlay-left-column img {
+    width: 100%;
+  }
+
+  .overlay-right-column p {
+    font-size: 32px;
+  }
+
 }
 
 /* Laptop styles for overlay layout */
-@media (min-width: var(--breakpoint-laptop)) {
-  .overlay-left-column {
-    flex: 0 0 25%; /* Further adjust width for larger screens */
-  }
+@media (min-width: 1025px) {
 
-  .overlay-right-column {
-    flex: 0 0 65%; /* Further adjust width for larger screens */
-  }
-
-  .overlay-date,
-  .overlay-location {
-    font-size: 1.2rem; /* Keep consistent or adjust further */
-  }
-
-  .overlay-text,
-  .overlay-bio-text {
-    font-size: 1.3rem; /* Increase for laptop */
-  }
 }
 
 /* Desktop styles for overlay layout */
-@media (min-width: var(--breakpoint-desktop)) {
-  .overlay-left-column {
-    flex: 0 0 20%; /* Even further adjust width for very large screens */
-  }
+@media (min-width: 1441px) {
 
-  .overlay-right-column {
-    flex: 0 0 70%; /* Even further adjust width for very large screens */
-  }
-
-  .overlay-date,
-  .overlay-location {
-    font-size: 1.3rem; /* Adjust for desktop */
-  }
-
-  .overlay-text,
-  .overlay-bio-text {
-    font-size: 1.4rem; /* Increase for desktop */
-  }
 }
