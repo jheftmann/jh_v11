@@ -78,9 +78,7 @@ body {
 
 /* Presentation */
 p, h1, h2, h3, h4, h5, h6 {
-  // font-size: $font-size-lg;
-  // line-height: 110%;
-  
+  line-height: $line-height-base;
 }
 
 a {
@@ -433,7 +431,7 @@ body.information-open .nav-info h2 .nav-link {
 }
 
 .expandable-section {
-  margin-bottom: $spacing-double;
+  // margin-bottom: $spacing-double;
 }
 
 .trigger-and-first-content-container .content {
@@ -564,6 +562,12 @@ body.information-open .overlay-gradient-bottom {
   flex: 5; /* Fixed width for left column */
 }
 
+.overlay-left-column p {
+  font-size: $font-size-sm;
+  line-height: $line-height-plus;
+  letter-spacing: $letter-spacing-none;
+}
+
 .overlay-right-column {
   flex: 6; /* Allow right column to take remaining space */
 }
@@ -596,33 +600,15 @@ body.information-open .overlay-gradient-bottom {
 }
 
 .overlay-left-column p {
-  font-size: 12px; /* 12px font size for date/year */
-  color: $color-true-white; /* Ensure white for date */
-  margin-bottom: 2px; /* Small margin after date */
-  line-height: 1.4; /* Explicit line-height */
+
 }
 
 .overlay-section-col2 p {
-  font-size: 15px; /* Adjusted font size for project descriptions for mobile */
-  color: $color-true-white; /* Ensure white for project text */
-  line-height: 1.4; /* Adjusted line height */
-  letter-spacing: $letter-spacing-base;
-  margin-bottom: 0; /* No margin-bottom, handled by column gap */
 }
 
 .overlay-image-small {
-  max-width: 50px; /* Adjust image size to fit three columns on mobile */
   height: auto;
-  display: block;
-  margin-bottom: 0; /* No margin-bottom, handled by column gap */
-}
-
-.overlay-bio-text {
-  font-size: 15px; /* Adjusted font size for main bio text for mobile */
-  color: $color-true-white;
-  line-height: 1.4; /* Adjusted line height */
-  letter-spacing: $letter-spacing-base;
-}
+  display: block;}
 
 /* Tablet styles for overlay layout */
 @media (min-width: 769px) {
@@ -666,12 +652,7 @@ body.information-open .overlay-gradient-bottom {
   }
 
   .overlay-left-column p {
-    font-size: 12px; /* Keep at 12px for tablet */
-    line-height: 1.4; /* Explicit line-height */
-  }
 
-  .overlay-section-col2 p {
-    font-size: 16px; /* Adjust for tablet */
   }
 
   .overlay-left-column img {
@@ -681,66 +662,10 @@ body.information-open .overlay-gradient-bottom {
 
 /* Laptop styles for overlay layout */
 @media (min-width: 1025px) {
-  // .overlay-columns {
-  //   gap: 100px; /* Larger gap for laptop */
-  // }
 
-  // .overlay-left-column {
-  //   flex: 0 0 240px; /* Adjusted fixed width for laptop */
-  //   max-width: 240px;
-  // }
-
-  // .overlay-section {
-  //   gap: 30px; /* Larger spacing for inner columns */
-  // }
-
-  // .overlay-section-col1 {
-  //   flex: 0 0 110px; /* Adjust width for date/location column */
-  // }
-
-  // .overlay-section-col3 {
-  //   flex: 0 0 100px; /* Adjust width for image column */
-  // }
-
-  // .overlay-section-col2 p,
-  // .overlay-bio-text {
-  //   font-size: 18px; /* Larger font size for laptop */
-  // }
-
-  // .overlay-image-small {
-  //   max-width: 100px; /* Larger image size for laptop */
-  // }
 }
 
 /* Desktop styles for overlay layout */
 @media (min-width: 1441px) {
-  // .overlay-columns {
-  //   gap: 120px; /* Even larger gap for desktop */
-  // }
 
-  // .overlay-left-column {
-  //   flex: 0 0 280px; /* Adjusted fixed width for desktop */
-  //   max-width: 280px;
-  // }
-
-  // .overlay-section {
-  //   gap: 40px; /* Even larger spacing for inner columns */
-  // }
-
-  // .overlay-section-col1 {
-  //   flex: 0 0 130px; /* Adjust width for date/location column */
-  // }
-
-  // .overlay-section-col3 {
-  //   flex: 0 0 120px; /* Adjust width for image column */
-  // }
-
-  // .overlay-section-col2 p,
-  // .overlay-bio-text {
-  //   font-size: 20px; /* Largest font size for desktop */
-  // }
-
-  // .overlay-image-small {
-  //   max-width: 120px; /* Largest image size for desktop */
-  //}
 }

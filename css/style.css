@@ -51,6 +51,10 @@ body {
 }
 
 /* Presentation */
+p, h1, h2, h3, h4, h5, h6 {
+  line-height: 110%;
+}
+
 a {
   color: #000000;
   text-decoration: none;
@@ -381,10 +385,6 @@ body.information-open .nav-info h2 .nav-link {
   color: #ffffff;
 }
 
-.expandable-section {
-  margin-bottom: 30px;
-}
-
 .trigger-and-first-content-container .content {
   margin-bottom: 5px;
   text-indent: 60px; /* Default text indent */
@@ -509,6 +509,12 @@ body.information-open .overlay-gradient-bottom {
   flex: 5; /* Fixed width for left column */
 }
 
+.overlay-left-column p {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0;
+}
+
 .overlay-right-column {
   flex: 6; /* Allow right column to take remaining space */
 }
@@ -540,33 +546,9 @@ body.information-open .overlay-gradient-bottom {
   justify-content: flex-end; /* Align image to the right */
 }
 
-.overlay-left-column p {
-  font-size: 12px; /* 12px font size for date/year */
-  color: #ffffff; /* Ensure white for date */
-  margin-bottom: 2px; /* Small margin after date */
-  line-height: 1.4; /* Explicit line-height */
-}
-
-.overlay-section-col2 p {
-  font-size: 15px; /* Adjusted font size for project descriptions for mobile */
-  color: #ffffff; /* Ensure white for project text */
-  line-height: 1.4; /* Adjusted line height */
-  letter-spacing: -0.025em;
-  margin-bottom: 0; /* No margin-bottom, handled by column gap */
-}
-
 .overlay-image-small {
-  max-width: 50px; /* Adjust image size to fit three columns on mobile */
   height: auto;
   display: block;
-  margin-bottom: 0; /* No margin-bottom, handled by column gap */
-}
-
-.overlay-bio-text {
-  font-size: 15px; /* Adjusted font size for main bio text for mobile */
-  color: #ffffff;
-  line-height: 1.4; /* Adjusted line height */
-  letter-spacing: -0.025em;
 }
 
 /* Tablet styles for overlay layout */
@@ -601,13 +583,6 @@ body.information-open .overlay-gradient-bottom {
   }
   .overlay-section-col3 {
     flex: 1;
-  }
-  .overlay-left-column p {
-    font-size: 12px; /* Keep at 12px for tablet */
-    line-height: 1.4; /* Explicit line-height */
-  }
-  .overlay-section-col2 p {
-    font-size: 16px; /* Adjust for tablet */
   }
   .overlay-left-column img {
     width: 100%; /* Larger image size for tablet */
