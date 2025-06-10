@@ -21,11 +21,11 @@ jobs:
           node-version: '20'
 
       # Optional: Add any build steps here if needed
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
       
-      # - name: Build
-      #   run: npm run build
+      - name: Build CSS
+        run: npm run build:sass
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
