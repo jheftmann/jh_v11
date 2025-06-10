@@ -631,7 +631,7 @@ body.information-open .overlay-gradient-bottom {
 @media (min-width: 769px) {
   .overlay-columns {
     flex-direction: row; /* Two columns horizontally */
-    gap: $spacing-base; /* Specific gap for tablet */
+    gap: $spacing-base / 2; /* Specific gap for tablet */
     justify-content: center;
     align-items: flex-start;
   }
