@@ -289,25 +289,38 @@ document.addEventListener('DOMContentLoaded', function() {
     history.replaceState(null, '', window.location.pathname); // Remove hash
   }
 
-  // Event listener for opening the information overlay
-  if (navInfoLink) {
-    navInfoLink.addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default link behavior
-      if (document.body.classList.contains('information-open')) {
-        closeInformationOverlay();
-      } else {
-        openInformationOverlay();
-      }
-    });
-  }
+  // Event listener for opening the information overlay via nav-info link
+  navInfoLink.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    openInformationOverlay();
+  });
 
-  // Event listener for closing the information overlay
-  if (closeButton) {
-    closeButton.addEventListener('click', function() {
+  // New: Event listener for any link with the data-attribute 'data-open-information-overlay'
+  document.addEventListener('click', function(e) {
+    if (e.target.dataset.openInformationOverlay !== undefined) {
+      e.preventDefault(); // Prevent default link behavior
+      openInformationOverlay();
+    }
+  });
+
+  // Event listener for closing the information overlay via close button
+  closeButton.addEventListener('click', function() {
+    closeInformationOverlay();
+  });
+
+  // Close overlay if clicking outside the overlay content
+  informationOverlay.addEventListener('click', function(e) {
+    if (e.target === informationOverlay) { // Check if the click is directly on the overlay background
       closeInformationOverlay();
-    });
-  }
-  console.log('Setting up close button listener. closeButton is:', closeButton);
+    }
+  });
+
+  // Keyboard escape key to close overlay
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeInformationOverlay();
+    }
+  });
 
   // Check URL hash on page load to open overlay if needed
   if (window.location.hash === '#information') {
