@@ -577,7 +577,7 @@ body.information-open .overlay-gradient-bottom {
 
 .overlay-columns {
   display: flex;
-  flex-direction: column; /* Stack columns vertically on mobile */
+  flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
   gap: $spacing-base; /* Spacing between columns for mobile */
   width: 100%;
 }
