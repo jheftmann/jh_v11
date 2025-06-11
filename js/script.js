@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let maxBottom = 0;
     overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
       const highlightId = section.getAttribute('data-highlight');
-      const highlight = document.getElementById(highlightId);
+      const highlight = overlay.querySelector('.highlight[data-highlight-id="' + highlightId + '"]');
       if (highlight) {
         const highlightRect = highlight.getBoundingClientRect();
         const sectionRect = section.getBoundingClientRect();
