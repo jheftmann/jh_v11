@@ -280,6 +280,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update URL to denote that the information layer is revealed
     window.location.hash = 'information';
+
+    // Ensure overlay alignment after it is visible and layout is complete
+    requestAnimationFrame(() => {
+      requestAnimationFrame(alignOverlaySections);
+    });
   }
 
   function closeInformationOverlay() {
@@ -338,6 +343,55 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.location.hash === '#information') {
     openInformationOverlay();
   }
+
+  // --- Overlay Alignment Logic ---
+  function alignOverlaySections() {
+    if (window.innerWidth < 769) {
+      // Reset any top positioning for mobile
+      const overlay = document.getElementById('information-overlay');
+      if (overlay) {
+        overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
+          section.style.top = '';
+        });
+        const leftCol = overlay.querySelector('.overlay-left-column');
+        if (leftCol) {
+          leftCol.style.minHeight = '';
+        }
+      }
+      return;
+    }
+    const overlay = document.getElementById('information-overlay');
+    if (!overlay || getComputedStyle(overlay).display === 'none') return;
+    const alignRoot = overlay.querySelector('.overlay-align-root');
+    if (!alignRoot) return;
+    const rootRect = alignRoot.getBoundingClientRect();
+    let maxBottom = 0;
+    overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
+      const highlightId = section.getAttribute('data-highlight');
+      const highlight = document.getElementById(highlightId);
+      if (highlight) {
+        const highlightRect = highlight.getBoundingClientRect();
+        const sectionRect = section.getBoundingClientRect();
+        const top = highlightRect.top - rootRect.top;
+        console.log('section:', section, 'highlight:', highlight, 'section top:', sectionRect.top, 'highlight top:', highlightRect.top, 'root top:', rootRect.top, 'computed top:', top);
+        section.style.top = top + 'px';
+        const sectionHeight = section.offsetHeight;
+        if (top + sectionHeight > maxBottom) {
+          maxBottom = top + sectionHeight;
+        }
+      } else {
+        console.log('No highlight found for section', section, 'with id', highlightId);
+      }
+    });
+    // Ensure the left column is tall enough
+    const leftCol = overlay.querySelector('.overlay-left-column');
+    if (leftCol) {
+      leftCol.style.minHeight = maxBottom + 'px';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', alignOverlaySections);
+  window.addEventListener('resize', alignOverlaySections);
+  document.getElementById('information-overlay').addEventListener('transitionend', alignOverlaySections);
 
   // --------------------------------
 }); 

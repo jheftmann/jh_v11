@@ -522,10 +522,13 @@ body.information-open .overlay-gradient-bottom {
   flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
   gap: 20px; /* Spacing between columns for mobile */
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .overlay-left-column {
-  flex: 5; /* Fixed width for left column */
+  position: relative;
+  min-height: 100vh;
 }
 
 .overlay-left-column p {
@@ -536,6 +539,12 @@ body.information-open .overlay-gradient-bottom {
 
 .overlay-right-column {
   flex: 6; /* Allow right column to take remaining space */
+  position: relative;
+  color: #8A8A8A;
+}
+
+.overlay-right-column .highlight {
+  color: #ffffff;
 }
 
 .overlay-right-column p + p {
@@ -570,10 +579,16 @@ body.information-open .overlay-gradient-bottom {
 }
 
 .overlay-image-small {
+  width: 100px;
   height: auto;
-  display: block;
 }
 
+@media (min-width: 769px) {
+  .overlay-image-small {
+    width: 100%;
+    height: auto;
+  }
+}
 /* Tablet styles for overlay layout */
 @media (min-width: 769px) {
   .overlay-columns {
@@ -613,5 +628,48 @@ body.information-open .overlay-gradient-bottom {
 }
 /* Laptop styles for overlay layout */
 /* Desktop styles for overlay layout */
+.overlay-section-col1 p[data-highlight] {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: top 0.3s;
+}
+
+@media (min-width: 769px) {
+  .overlay-section[data-highlight] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: top 0.3s;
+    margin-bottom: 0;
+  }
+}
+
+.overlay-align-root {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.overlay-columns {
+  margin: 0;
+  padding: 0;
+}
+
+.overlay-left-column,
+.overlay-right-column {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .overlay-section-col1:empty,
+  .overlay-section-col2:empty,
+  .overlay-section-col3:empty {
+    display: none;
+  }
+  .overlay-left-column {
+    min-height: 0;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */
