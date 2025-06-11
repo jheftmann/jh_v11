@@ -284,7 +284,10 @@ span.sub-content {
   }
 
   .nav-info h2 {
-    text-align: right; /* Ensure text is right-aligned within h2 */
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
   }
 }
 
@@ -344,7 +347,10 @@ span.sub-content {
   }
 
   .nav-info h2 {
-    text-align: right; /* Ensure text is right-aligned within h2 */
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
   }
 }
 

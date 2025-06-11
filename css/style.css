@@ -247,7 +247,10 @@ span.sub-content {
     align-items: center;
   }
   .nav-info h2 {
-    text-align: right; /* Ensure text is right-aligned within h2 */
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
   }
 }
 /* Laptop Styles */
@@ -298,7 +301,10 @@ span.sub-content {
     align-items: center;
   }
   .nav-info h2 {
-    text-align: right; /* Ensure text is right-aligned within h2 */
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
   }
 }
 /* Desktop Styles */
