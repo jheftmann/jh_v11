@@ -346,6 +346,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Overlay Alignment Logic ---
   function alignOverlaySections() {
+    if (window.innerWidth < 769) {
+      // Reset any top positioning for mobile
+      const overlay = document.getElementById('information-overlay');
+      if (overlay) {
+        overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
+          section.style.top = '';
+        });
+        const leftCol = overlay.querySelector('.overlay-left-column');
+        if (leftCol) {
+          leftCol.style.minHeight = '';
+        }
+      }
+      return;
+    }
     const overlay = document.getElementById('information-overlay');
     if (!overlay || getComputedStyle(overlay).display === 'none') return;
     const alignRoot = overlay.querySelector('.overlay-align-root');
