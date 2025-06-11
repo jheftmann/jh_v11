@@ -604,6 +604,11 @@ body.information-open .overlay-gradient-bottom {
 .overlay-right-column {
   flex: 6; /* Allow right column to take remaining space */
   position: relative;
+  color: $color-text-gray;
+}
+
+.overlay-right-column .highlight {
+  color: $color-true-white;
 }
 
 .overlay-right-column p + p {
