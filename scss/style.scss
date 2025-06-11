@@ -586,10 +586,13 @@ body.information-open .overlay-gradient-bottom {
   flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
   gap: $spacing-base; /* Spacing between columns for mobile */
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .overlay-left-column {
-  flex: 5; /* Fixed width for left column */
+  position: relative;
+  min-height: 100vh;
 }
 
 .overlay-left-column p {
@@ -600,6 +603,7 @@ body.information-open .overlay-gradient-bottom {
 
 .overlay-right-column {
   flex: 6; /* Allow right column to take remaining space */
+  position: relative;
 }
 
 .overlay-right-column p + p {
@@ -695,4 +699,35 @@ body.information-open .overlay-gradient-bottom {
 /* Desktop styles for overlay layout */
 @media (min-width: 1441px) {
 
+}
+
+.overlay-section-col1 p[data-highlight] {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: top 0.3s;
+}
+
+.overlay-section[data-highlight] {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: top 0.3s;
+  margin-bottom: 0;
+}
+
+.overlay-align-root {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.overlay-columns {
+  margin: 0;
+  padding: 0;
+}
+
+.overlay-left-column,
+.overlay-right-column {
+  position: relative;
 }
