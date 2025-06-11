@@ -394,4 +394,18 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('information-overlay').addEventListener('transitionend', alignOverlaySections);
 
   // --------------------------------
+
+  // Update career years span
+  var careerSpan = document.querySelector('span[data-career-years]');
+  if (careerSpan) {
+    var startYear = 2007;
+    var now = new Date();
+    var years = now.getFullYear() - startYear;
+    // If before July, round down, otherwise round up
+    var month = now.getMonth();
+    if (month >= 6) {
+      years = Math.round(now.getFullYear() - startYear + (month / 12));
+    }
+    careerSpan.textContent = years;
+  }
 }); 
