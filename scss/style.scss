@@ -709,11 +709,14 @@ body.information-open .overlay-gradient-bottom {
 }
 
 .overlay-section[data-highlight] {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  transition: top 0.3s;
-  margin-bottom: 0;
+  // On mobile, use default relative positioning for stacking
+  @media (min-width: 769px) {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: top 0.3s;
+    margin-bottom: 0;
+  }
 }
 
 .overlay-align-root {
@@ -730,4 +733,15 @@ body.information-open .overlay-gradient-bottom {
 .overlay-left-column,
 .overlay-right-column {
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .overlay-section-col1:empty,
+  .overlay-section-col2:empty,
+  .overlay-section-col3:empty {
+    display: none;
+  }
+  .overlay-left-column {
+    min-height: 0;
+  }
 }
