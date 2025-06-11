@@ -9,7 +9,6 @@ body {
   height: 100%; /* Ensure html and body take full viewport height */
   box-sizing: border-box;
   margin: 0; /* Ensure no default browser margins */
-  text-box: trim-both cap alphabetic;
   hyphens: auto; /* Enable automatic hyphenation */
   overflow-y: auto; /* Enable scrolling for the document itself */
 }
@@ -57,8 +56,10 @@ body.information-open {
 }
 
 /* Presentation */
-p, h1, h2, h3, h4, h5, h6 {
+p, a, h1, h2, h3, h4, h5, h6 {
   line-height: 110%;
+  text-box-trim: trim-both;
+  text-box-edge: cap;
 }
 
 a {
