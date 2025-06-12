@@ -48,7 +48,7 @@ $spacing-base-sm: 15px; /* Mobile spacing unit */
 $spacing-double: 30px; /* Adjusted double spacing for mobile */
 $spacing-none: 0;
 
-$page-bottom: 100px;
+$page-bottom: 200px;
 
 /* Transition timing */
 $transition-overlay: 0.5s ease;
@@ -148,7 +148,7 @@ a {
   display: flex; /* Flexbox for mobile */
   flex-direction: column; /* Stack columns vertically */
   flex-grow: 1; /* Ensure columns take full height on mobile */
-  gap: $spacing-base-half; /* Vertical spacing */
+  gap: $spacing-unit; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
 
@@ -534,7 +534,7 @@ body.information-open .container {
   text-align: left; /* Align text to the left as per the image */
   padding: 20px; /* Adjust padding for top/bottom and sides */
   box-sizing: border-box;
-  padding-bottom: 150px; /* Increased padding to account for fixed gradient */
+  padding-bottom: $page-bottom; /* Increased padding to account for fixed gradient */
 }
 
 body.information-open .overlay-content {

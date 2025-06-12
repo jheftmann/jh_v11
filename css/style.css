@@ -115,7 +115,7 @@ a:hover, a:visited, a:active {
   display: flex; /* Flexbox for mobile */
   flex-direction: column; /* Stack columns vertically */
   flex-grow: 1; /* Ensure columns take full height on mobile */
-  gap: 10px; /* Vertical spacing */
+  gap: 5px; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
 }
@@ -480,7 +480,7 @@ body.information-open .container {
   text-align: left; /* Align text to the left as per the image */
   padding: 20px; /* Adjust padding for top/bottom and sides */
   box-sizing: border-box;
-  padding-bottom: 150px; /* Increased padding to account for fixed gradient */
+  padding-bottom: 200px; /* Increased padding to account for fixed gradient */
 }
 
 body.information-open .overlay-content {
