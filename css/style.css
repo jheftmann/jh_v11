@@ -115,7 +115,7 @@ a:hover, a:visited, a:active {
   display: flex; /* Flexbox for mobile */
   flex-direction: column; /* Stack columns vertically */
   flex-grow: 1; /* Ensure columns take full height on mobile */
-  gap: 20px; /* Vertical spacing */
+  gap: 10px; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
 }
@@ -270,7 +270,6 @@ span.sub-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-    gap: 10px;
     flex-grow: 1;
   }
   /* Desktop Grid Positioning (same as tablet, can be overridden if needed) */

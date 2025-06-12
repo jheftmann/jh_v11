@@ -130,12 +130,6 @@ a {
   margin-right: $spacing-none;
 }
 
-// sup {
-//   font-size: 16px;
-//   vertical-align: text-top;
-//   margin-left: $spacing-unit;
-// }
-
 .margin-auto-top {
   margin-top: auto;
 }
@@ -154,7 +148,7 @@ a {
   display: flex; /* Flexbox for mobile */
   flex-direction: column; /* Stack columns vertically */
   flex-grow: 1; /* Ensure columns take full height on mobile */
-  gap: $spacing-base; /* Vertical spacing */
+  gap: $spacing-base-half; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
 
@@ -310,7 +304,6 @@ span.sub-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-    gap: $spacing-base-half;
     flex-grow: 1;
   }
 
