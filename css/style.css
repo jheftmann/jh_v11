@@ -390,14 +390,13 @@ body.information-open .nav-item * {
 .close-button {
   top: 0px;
   right: 0px;
-  font-size: 30px; /* Adjust as needed for visual size */
   cursor: pointer;
   color: #ffffff; /* White color for the close button */
   display: none; /* Hidden by default */
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
   z-index: 1002; /* Ensure it's above nav */
   float: right;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 body.information-open .close-button {

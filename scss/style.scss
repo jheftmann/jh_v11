@@ -439,14 +439,13 @@ body.information-open .nav-item * {
   // position: absolute;
   top: 0px;
   right: 0px;
-  font-size: 30px; /* Adjust as needed for visual size */
   cursor: pointer;
   color: $color-true-white; /* White color for the close button */
   display: none; /* Hidden by default */
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
   z-index: 1002; /* Ensure it's above nav */
   float: right;
-  margin-left: $spacing-base;
+  margin-left: $spacing-base-half;
 }
 
 body.information-open .close-button {
