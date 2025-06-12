@@ -77,30 +77,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // Takes element, plain text to type, and a callback for completion
   function typeWriter(element, plainText, callback) {
     let i = 0;
-    element.textContent = ''; // Clear existing content using textContent
-    element.hidden = false; // Make element visible
-    const speed = 17; // Typing speed in milliseconds
-    const mobileBreakpoint = 769; // From $breakpoint-tablet in scss/style.scss
+    // Split plainText into words, preserving spaces
+    const words = plainText.match(/\S+\s*/g) || [];
+    element.textContent = '';
+    element.hidden = false;
+    const speed = 100; // Typing speed in milliseconds per word. Bigger is slower.
+    const mobileBreakpoint = 769;
 
     function type() {
-      if (i < plainText.length) {
-        element.textContent += plainText.charAt(i);
+      if (i < words.length) {
+        element.textContent += words[i];
         i++;
-
-        // Scroll into view on mobile only, as new text is added
         if (window.innerWidth < mobileBreakpoint) {
-          console.log(`Scrolling element: ${element.id || element.className} at width ${window.innerWidth}`);
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-
         setTimeout(type, speed);
       } else {
-        // Animation finished, execute callback with a small delay
         setTimeout(() => {
           if (callback) {
             callback();
           }
-        }, 50); // Small delay (kept for now, can be removed if layout is stable)
+        }, 50);
       }
     }
     type();
