@@ -699,18 +699,18 @@ body.information-open .overlay-gradient-bottom {
 
   .overlay-section {
     flex-direction: row; /* Three columns horizontally for tablet */
-    gap: 100px; /* Spacing between inner columns */
+    gap: 50px; /* Spacing between inner columns */
     align-items: flex-start;
     justify-content: space-between; /* Distribute items with space */
   }
 
   .overlay-section-col1 {
-    flex: 1;
+    flex: 2;
   }
 
   .overlay-section-col2 {
-    flex: 2;
-    padding-right: 100px;
+    flex: 3;
+    padding-right: 50px;
   }
 
   .overlay-section-col3 {
