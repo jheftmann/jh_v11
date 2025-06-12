@@ -785,6 +785,10 @@ body.information-open .overlay-gradient-bottom {
 /* Use only text-decoration for underlines in content links */
 .content a {
   text-decoration: underline;
-  text-underline-offset: -2px;
+  text-underline-offset: -4px;
   text-decoration-thickness: 2px;
+
+  @media (min-width: 769px) {
+    text-underline-offset: 3px;
+  }
 }
