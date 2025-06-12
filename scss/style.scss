@@ -154,7 +154,7 @@ a {
   display: flex; /* Flexbox for mobile */
   flex-direction: column; /* Stack columns vertically */
   flex-grow: 1; /* Ensure columns take full height on mobile */
-  gap: $spacing-base-half; /* Vertical spacing */
+  gap: $spacing-base; /* Vertical spacing */
   align-items: flex-start; /* Align items to the start of the column */
   justify-content: flex-start; /* Align items to the start for mobile layout */
 
