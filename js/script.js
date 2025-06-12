@@ -80,11 +80,19 @@ document.addEventListener('DOMContentLoaded', function() {
     element.textContent = ''; // Clear existing content using textContent
     element.hidden = false; // Make element visible
     const speed = 17; // Typing speed in milliseconds
+    const mobileBreakpoint = 769; // From $breakpoint-tablet in scss/style.scss
 
     function type() {
       if (i < plainText.length) {
         element.textContent += plainText.charAt(i);
         i++;
+
+        // Scroll into view on mobile only, as new text is added
+        if (window.innerWidth < mobileBreakpoint) {
+          console.log(`Scrolling element: ${element.id || element.className} at width ${window.innerWidth}`);
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         setTimeout(type, speed);
       } else {
         // Animation finished, execute callback with a small delay
@@ -272,6 +280,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update URL to denote that the information layer is revealed
     window.location.hash = 'information';
+
+    // Ensure overlay alignment after it is visible and layout is complete
+    requestAnimationFrame(() => {
+      requestAnimationFrame(alignOverlaySections);
+    });
   }
 
   function closeInformationOverlay() {
@@ -289,30 +302,117 @@ document.addEventListener('DOMContentLoaded', function() {
     history.replaceState(null, '', window.location.pathname); // Remove hash
   }
 
-  // Event listener for opening the information overlay
-  if (navInfoLink) {
-    navInfoLink.addEventListener('click', function(e) {
-      e.preventDefault(); // Prevent default link behavior
-      if (document.body.classList.contains('information-open')) {
-        closeInformationOverlay();
-      } else {
-        openInformationOverlay();
-      }
-    });
-  }
-
-  // Event listener for closing the information overlay
-  if (closeButton) {
-    closeButton.addEventListener('click', function() {
+  // Event listener for opening/closing the information overlay via nav-info link
+  navInfoLink.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    if (document.body.classList.contains('information-open')) {
       closeInformationOverlay();
-    });
-  }
-  console.log('Setting up close button listener. closeButton is:', closeButton);
+    } else {
+      openInformationOverlay();
+    }
+  });
+
+  // New: Event listener for any link with the data-attribute 'data-open-information-overlay'
+  document.addEventListener('click', function(e) {
+    if (e.target.dataset.openInformationOverlay !== undefined) {
+      e.preventDefault(); // Prevent default link behavior
+      openInformationOverlay();
+    }
+  });
+
+  // Event listener for closing the information overlay via close button
+  closeButton.addEventListener('click', function() {
+    closeInformationOverlay();
+  });
+
+  // Close overlay if clicking outside the overlay content
+  informationOverlay.addEventListener('click', function(e) {
+    if (e.target === informationOverlay) { // Check if the click is directly on the overlay background
+      closeInformationOverlay();
+    }
+  });
+
+  // Keyboard escape key to close overlay
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeInformationOverlay();
+    }
+  });
 
   // Check URL hash on page load to open overlay if needed
   if (window.location.hash === '#information') {
     openInformationOverlay();
   }
 
+  // --- Overlay Alignment Logic ---
+  function alignOverlaySections() {
+    if (window.innerWidth < 769) {
+      // Reset any top positioning for mobile
+      const overlay = document.getElementById('information-overlay');
+      if (overlay) {
+        overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
+          section.style.top = '';
+        });
+        const leftCol = overlay.querySelector('.overlay-left-column');
+        if (leftCol) {
+          leftCol.style.minHeight = '';
+        }
+      }
+      return;
+    }
+    const overlay = document.getElementById('information-overlay');
+    if (!overlay || getComputedStyle(overlay).display === 'none') return;
+    const alignRoot = overlay.querySelector('.overlay-align-root');
+    if (!alignRoot) return;
+    const rootRect = alignRoot.getBoundingClientRect();
+    let maxBottom = 0;
+    overlay.querySelectorAll('.overlay-section[data-highlight]').forEach(section => {
+      const highlightId = section.getAttribute('data-highlight');
+      const highlight = overlay.querySelector('.highlight[data-highlight-id="' + highlightId + '"]');
+      if (highlight) {
+        const highlightRect = highlight.getBoundingClientRect();
+        const sectionRect = section.getBoundingClientRect();
+        let top = highlightRect.top - rootRect.top;
+        // --- Prevent Overlap Logic (easy to undo) ---
+        if (typeof window._prevOverlaySectionBottom === 'number' && top < window._prevOverlaySectionBottom) {
+          top = window._prevOverlaySectionBottom + 20; // Add 20px vertical space when pushed down
+        }
+        section.style.top = top + 'px';
+        const sectionHeight = section.offsetHeight;
+        if (top + sectionHeight > maxBottom) {
+          maxBottom = top + sectionHeight;
+        }
+        window._prevOverlaySectionBottom = top + sectionHeight;
+        // --- End Prevent Overlap Logic ---
+      } else {
+        console.log('No highlight found for section', section, 'with id', highlightId);
+      }
+    });
+    // Reset for next alignment run
+    window._prevOverlaySectionBottom = undefined;
+    // Ensure the left column is tall enough
+    const leftCol = overlay.querySelector('.overlay-left-column');
+    if (leftCol) {
+      leftCol.style.minHeight = maxBottom + 'px';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', alignOverlaySections);
+  window.addEventListener('resize', alignOverlaySections);
+  document.getElementById('information-overlay').addEventListener('transitionend', alignOverlaySections);
+
   // --------------------------------
+
+  // Update career years span
+  var careerSpan = document.querySelector('span[data-career-years]');
+  if (careerSpan) {
+    var startYear = 2007;
+    var now = new Date();
+    var years = now.getFullYear() - startYear;
+    // If before July, round down, otherwise round up
+    var month = now.getMonth();
+    if (month >= 6) {
+      years = Math.round(now.getFullYear() - startYear + (month / 12));
+    }
+    careerSpan.textContent = years;
+  }
 }); 

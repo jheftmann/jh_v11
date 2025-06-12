@@ -1,2 +1,5 @@
+# Ignore build artifacts and system files
+node_modules/
+dist/
 .DS_Store
 **/.DS_Store 

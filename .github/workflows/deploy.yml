@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grant write permissions for the GITHUB_TOKEN to push files
+      pages: write # Grant write permissions for GitHub Pages
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,11 +21,14 @@ jobs:
           node-version: '20'
 
       # Optional: Add any build steps here if needed
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
       
-      # - name: Build
-      #   run: npm run build
+      - name: Build CSS
+        run: npm run build:sass
+
+      - name: Verify CSS output
+        run: ls -l css/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
