@@ -372,17 +372,24 @@ document.addEventListener('DOMContentLoaded', function() {
       if (highlight) {
         const highlightRect = highlight.getBoundingClientRect();
         const sectionRect = section.getBoundingClientRect();
-        const top = highlightRect.top - rootRect.top;
-        console.log('section:', section, 'highlight:', highlight, 'section top:', sectionRect.top, 'highlight top:', highlightRect.top, 'root top:', rootRect.top, 'computed top:', top);
+        let top = highlightRect.top - rootRect.top;
+        // --- Prevent Overlap Logic (easy to undo) ---
+        if (typeof window._prevOverlaySectionBottom === 'number' && top < window._prevOverlaySectionBottom) {
+          top = window._prevOverlaySectionBottom + 20; // Add 20px vertical space when pushed down
+        }
         section.style.top = top + 'px';
         const sectionHeight = section.offsetHeight;
         if (top + sectionHeight > maxBottom) {
           maxBottom = top + sectionHeight;
         }
+        window._prevOverlaySectionBottom = top + sectionHeight;
+        // --- End Prevent Overlap Logic ---
       } else {
         console.log('No highlight found for section', section, 'with id', highlightId);
       }
     });
+    // Reset for next alignment run
+    window._prevOverlaySectionBottom = undefined;
     // Ensure the left column is tall enough
     const leftCol = overlay.querySelector('.overlay-left-column');
     if (leftCol) {
