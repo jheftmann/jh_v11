@@ -239,7 +239,7 @@ span.sub-content {
     display: grid; /* Use Grid for tablet layout */
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
-    gap: $spacing-unit; /* Gutter between grid items */
+    gap: $spacing-base; /* Gutter between grid items */
     flex-grow: 1;
     align-items: start; /* Reset mobile alignment */
     justify-content: start; /* Reset mobile justification */
@@ -593,7 +593,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-columns {
   display: flex;
   flex-direction: column-reverse; /* Stack columns vertically on mobile, reversed */
-  gap: $spacing-base; /* Spacing between columns for mobile */
+  gap: $spacing-base / 2; /* Spacing between columns for mobile */
   width: 100%;
   margin: 0;
   padding: 0;
@@ -699,18 +699,18 @@ body.information-open .overlay-gradient-bottom {
 
   .overlay-section {
     flex-direction: row; /* Three columns horizontally for tablet */
-    gap: 100px; /* Spacing between inner columns */
+    gap: 50px; /* Spacing between inner columns */
     align-items: flex-start;
     justify-content: space-between; /* Distribute items with space */
   }
 
   .overlay-section-col1 {
-    flex: 1;
+    flex: 2;
   }
 
   .overlay-section-col2 {
-    flex: 2;
-    padding-right: 100px;
+    flex: 3;
+    padding-right: 50px;
   }
 
   .overlay-section-col3 {

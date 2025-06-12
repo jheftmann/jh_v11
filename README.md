@@ -10,11 +10,11 @@ To run this project, you need Node.js installed. It is highly recommended to use
 
 *   This project requires Node.js version **14.0.0 or higher** (preferably the latest LTS version, e.g., Node.js 18+). 
 
-    If you encounter errors like `Error: Cannot find module 'fs/promises'` or `npm WARN notsup Unsupported engine`, it means your Node.js version is too old. You can resolve this by updating Node.js.
+    If you encounter errors like `Error: Cannot find module ’fs/promises’` or `npm WARN notsup Unsupported engine`, it means your Node.js version is too old. You can resolve this by updating Node.js.
 
 ## Getting Started
 
-1.  **Install Node Version Manager (nvm) - *if you don't have it already***:
+1.  **Install Node Version Manager (nvm) - *if you don’t have it already***:
     ```bash
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
     ```
