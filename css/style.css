@@ -1,12 +1,12 @@
 @font-face {
   font-family: "GT Standard Variable";
-  src: url("../_assets/fonts/GT-Standard-VF.woff2") format("woff2"), url("../_assets/fonts/GT-Standard-VF.ttf") format("truetype");
+  src: url("../_assets/fonts/GT-Standard-VF.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
 @font-face {
   font-family: "GT Standard Mono Variable";
-  src: url("../_assets/fonts/GT-Standard-Mono-VF.woff2") format("woff2"), url("../_assets/fonts/GT-Standard-Mono-VF.ttf") format("truetype");
+  src: url("../_assets/fonts/GT-Standard-Mono-VF.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
