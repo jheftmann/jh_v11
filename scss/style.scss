@@ -1,6 +1,22 @@
 @font-face {
+  font-family: 'GT Standard Variable';
+  src: url('../_assets/fonts/GT-Standard-VF.woff2') format('woff2'),
+       url('../_assets/fonts/GT-Standard-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GT Standard Mono Variable';
+  src: url('../_assets/fonts/GT-Standard-Mono-VF.woff2') format('woff2'),
+       url('../_assets/fonts/GT-Standard-Mono-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'ABCDiatype Medium';
-  src: url('../_assets/ABCDiatype-Medium-Trial.otf') format('opentype');
+  src: url('../_assets/fonts/ABCDiatype-Medium-Trial.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,7 +43,8 @@ $color-true-white: #ffffff;
 $color-background-base: #fff;
 $color-background-inverted: #000;
 
-$font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
+// $font-family-primary: 'ABCDiatype Medium', Helvetica, sans-serif;
+$font-family-primary: 'GT Standard Variable', Helvetica, sans-serif;
 $font-size-sm: 12px;
 $font-size-lg: 36px;
 $font-size-base: 24px;
@@ -35,7 +52,7 @@ $font-size-laptop: 32px; /* Mobile base font size */
 $font-size-desktop: 36px; /* Matches mobile base font size */
 
 $letter-spacing-none: 0;
-$letter-spacing-base: -.025em;
+$letter-spacing-base: -.015em;
 $line-height-base: 110%;
 $line-height-plus: 120%;
 $text-indent-base: 60px;
@@ -58,16 +75,18 @@ $breakpoint-laptop: 1025px;
 $breakpoint-desktop: 1441px;
 
 body {
+  display: flex; /* Make body a flex container */
+  flex-direction: column; /* Stack children vertically */
+  padding: $spacing-base; /* Consistent 20px padding around the body */
+
+  background: $color-background-base;
+  color: $color-true-black;
+
   font-size: $font-size-base;
   line-height: $line-height-base;
   letter-spacing: $letter-spacing-base;
   font-family: $font-family-primary;
-  background: $color-background-base;
-  color: $color-true-black;
-  display: flex; /* Make body a flex container */
-  flex-direction: column; /* Stack children vertically */
-  padding: $spacing-base; /* Consistent 20px padding around the body */
-  // background-color: red;
+  font-variation-settings: "wght" 400, "wdth" 95, "slnt" 0;
 
   @media (min-width: $breakpoint-tablet) {
     font-size: $font-size-base;
@@ -134,6 +153,10 @@ a {
 
 .margin-auto-top {
   margin-top: auto;
+}
+
+.trigger-number {
+  font-variation-settings: "wdth" 100;
 }
 
 /* Layout - Mobile First */
