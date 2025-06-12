@@ -775,3 +775,16 @@ body.information-open .overlay-gradient-bottom {
     min-height: 0;
   }
 }
+
+/* Remove underline from navigation links */
+.nav a,
+.nav-link {
+  text-decoration: none !important;
+}
+
+/* Use only text-decoration for underlines in content links */
+.content a {
+  text-decoration: underline;
+  text-underline-offset: -2px;
+  text-decoration-thickness: 2px;
+}
