@@ -25,7 +25,7 @@ body {
 /* Adjusted double spacing for mobile */
 /* Transition timing */
 body {
-  font-size: 28px;
+  font-size: 24px;
   line-height: 110%;
   letter-spacing: -0.025em;
   font-family: "ABCDiatype Medium", Helvetica, sans-serif;
@@ -37,7 +37,7 @@ body {
 }
 @media (min-width: 769px) {
   body {
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 @media (min-width: 1025px) {
