@@ -60,14 +60,15 @@ p, a, h1, h2, h3, h4, h5, h6 {
   line-height: 110%;
   text-box-trim: trim-both;
   text-box-edge: cap;
+  text-wrap: pretty;
 }
 
 a {
-  color: #000000;
+  color: inherit;
   text-decoration: none;
 }
 a:hover, a:visited, a:active {
-  color: #000000;
+  color: inherit;
 }
 
 .text-large {
@@ -566,6 +567,18 @@ body.information-open .overlay-gradient-bottom {
   align-items: flex-start;
 }
 
+.overlay-section p {
+  color: #D5D5D5;
+}
+
+.overlay-section a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.overlay-section a:hover {
+  text-decoration: none;
+}
+
 .overlay-section-col1 {
   /* Date and location column */
   flex-shrink: 0;
@@ -615,7 +628,7 @@ body.information-open .overlay-gradient-bottom {
   }
   .overlay-section {
     flex-direction: row; /* Three columns horizontally for tablet */
-    gap: 20px; /* Spacing between inner columns */
+    gap: 100px; /* Spacing between inner columns */
     align-items: flex-start;
     justify-content: space-between; /* Distribute items with space */
   }
@@ -623,8 +636,8 @@ body.information-open .overlay-gradient-bottom {
     flex: 1;
   }
   .overlay-section-col2 {
-    flex: 3;
-    padding-right: 60px;
+    flex: 2;
+    padding-right: 100px;
   }
   .overlay-section-col3 {
     flex: 1;
