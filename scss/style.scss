@@ -84,7 +84,7 @@ body {
   line-height: $line-height-base;
   letter-spacing: $letter-spacing-base;
   font-family: $font-family-primary;
-  font-variation-settings: "wght" 400, "wdth" 95, "slnt" 0;
+  font-variation-settings: "wght" 500, "wdth" 100, "slnt" 0;
 
   @media (min-width: $breakpoint-tablet) {
     font-size: $font-size-base;
@@ -805,7 +805,7 @@ body.information-open .overlay-gradient-bottom {
 /* Use only text-decoration for underlines in content links */
 .content a {
   text-decoration: underline;
-  text-underline-offset: -5px;
+  // text-underline-offset: -5px;
   text-decoration-thickness: 2px;
 
   @media (min-width: 769px) {
