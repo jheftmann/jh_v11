@@ -54,7 +54,7 @@ $letter-spacing-base: -.015em;
 $line-height-base: 110%;
 $line-height-plus: 120%;
 $text-indent-base: 60px;
-$text-indent-sm: 48px;
+$text-indent-sm: 32px;
 
 $spacing-unit: 5px;
 $spacing-base-half: 10px;
@@ -84,7 +84,7 @@ body {
   line-height: $line-height-base;
   letter-spacing: $letter-spacing-base;
   font-family: $font-family-primary;
-  font-variation-settings: "wght" 400, "wdth" 95, "slnt" 0;
+  font-variation-settings: "wght" 500, "wdth" 100, "slnt" 0;
 
   @media (min-width: $breakpoint-tablet) {
     font-size: $font-size-base;
@@ -106,10 +106,13 @@ body.information-open {
 /* Presentation */
 p, a, h1, h2, h3, h4, h5, h6 {
   line-height: $line-height-base;
-  text-box-trim: trim-both;
-  text-box-edge: cap;
-  text-wrap: pretty;
+
+  
   // text-box: trim-both cap alphabetic;
+}
+
+p, span {
+  text-wrap: pretty;
 }
 
 a {
@@ -368,6 +371,8 @@ span.sub-content {
     align-items: center;
     text-align: left;
     width: 100%;
+    text-box-trim: trim-both;
+    text-box-edge: cap;
   }
 }
 
@@ -636,7 +641,11 @@ body.information-open .overlay-gradient-bottom {
 }
 
 .overlay-right-column p + p {
-  text-indent: $text-indent-base;
+  text-indent: $text-indent-sm;
+
+  @media (min-width: 769px) {
+    text-indent: $text-indent-base;
+  }
 }
 
 .overlay-section {
@@ -805,7 +814,7 @@ body.information-open .overlay-gradient-bottom {
 /* Use only text-decoration for underlines in content links */
 .content a {
   text-decoration: underline;
-  text-underline-offset: -5px;
+  // text-underline-offset: -5px;
   text-decoration-thickness: 2px;
 
   @media (min-width: 769px) {
