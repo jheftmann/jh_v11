@@ -80,8 +80,6 @@ p, span {
 a {
   color: inherit;
   text-decoration: underline;
-  text-underline-offset: 2px;
-  text-decoration-thickness: 1.5px;
 }
 a:hover, a:visited, a:active {
   color: inherit;
