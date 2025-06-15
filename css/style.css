@@ -597,6 +597,7 @@ body.information-open .overlay-gradient-bottom {
 .overlay-section a {
   text-decoration: underline;
   cursor: pointer;
+  text-decoration-thickness: 1px;
 }
 .overlay-section a:hover {
   text-decoration: none;
