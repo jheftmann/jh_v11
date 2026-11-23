@@ -36,6 +36,10 @@ body {
 
 $color-text-gray: #8A8A8A;
 $color-text-gray-light: #D5D5D5;
+$color-arrow-icon-idle: #E1E1E1;
+/* How far the arrow circle sits below the text baseline. 0.051em lines it
+   up with the trigger number; lower it toward 0 to raise the arrows. */
+$arrow-icon-baseline-drop: 0.051em;
 $color-true-black: #000000;
 $color-true-white: #ffffff;
 $color-background-base: #fff;
@@ -60,6 +64,7 @@ $spacing-unit: 5px;
 $spacing-base-half: 10px;
 $spacing-base: 20px;
 $spacing-base-sm: 15px; /* Mobile spacing unit */
+$grid-gutter: 40px; /* Gutter between the two content columns */
 $spacing-double: 30px; /* Adjusted double spacing for mobile */
 $spacing-none: 0;
 
@@ -155,6 +160,9 @@ a {
 
 .trigger-number {
   font-variation-settings: "wdth" 100;
+  font-size: 0.78em;
+  position: relative;
+  top: -0.099em;
 }
 
 /* Layout - Mobile First */
@@ -256,7 +264,7 @@ span.sub-content {
     display: grid; /* Use Grid for tablet layout */
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
-    gap: $spacing-base; /* Gutter between grid items */
+    gap: $grid-gutter; /* Gutter between grid items */
     flex-grow: 1;
     align-items: start; /* Reset mobile alignment */
     justify-content: start; /* Reset mobile justification */
@@ -282,9 +290,11 @@ span.sub-content {
     grid-column: 1 / span 2;
     grid-row: 2;
     align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: flex-start;
+    /* Same track geometry as .columns, so the nav items line up with the
+       columns above them whatever the gutter is. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $grid-gutter;
     width: 100%; /* Take full width */
     margin-top: 0; /* Reset mobile margin */
   }
@@ -345,9 +355,11 @@ span.sub-content {
     grid-column: 1 / span 2;
     grid-row: 2;
     align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: flex-start;
+    /* Same track geometry as .columns, so the nav items line up with the
+       columns above them whatever the gutter is. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $grid-gutter;
     width: 100%; /* Take full width */
   }
 
@@ -398,7 +410,9 @@ span.sub-content {
 
 .trigger {
   cursor: pointer;
-  display: inline-block;
+  /* inline, not inline-block: the sentence must keep flowing into the
+     content that types in after it. */
+  display: inline;
 }
 
 .trigger-number-filled {
@@ -496,16 +510,93 @@ body.information-open .nav-info h2 .nav-link {
 
 .expandable-section .content a {
   color: $color-true-black;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.expandable-section .content a:hover {
+/* Keeps an arrow icon on the same line as the word it follows. The wrapper
+   and the icon stay transparent to clicks so the link itself remains the
+   event target. */
+.nowrap,
+.arrow-icon {
+  pointer-events: none;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Circular arrow icon - replaces the plain-text arrow characters in links
+   and after the always-visible intro line. Sized in em so it tracks the
+   responsive type scale. */
+.arrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.807em;
+  height: 0.807em;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background-color: $color-arrow-icon-idle;
+  margin-left: 0.2em;
+  vertical-align: baseline;
+  overflow: hidden;
+  position: relative;
+  top: $arrow-icon-baseline-drop;
+  text-indent: 0;
   text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.arrow-icon::before {
+  content: "\2193";
+  display: block;
+  font-size: 0.538em;
+  font-weight: 700;
+  font-variation-settings: "wdth" 100;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: $color-true-white;
+  position: relative;
+  top: -0.054em;
+  transform-origin: 50% 0.554em;
+}
+
+.arrow-icon-up-right::before {
+  transform: rotate(-135deg);
+}
+
+.arrow-icon-up::before {
+  transform: rotate(180deg);
+}
+
+/* Arrows that sit inside expanded copy follow that copy: always black. */
+.expandable-section .content .arrow-icon {
+  background-color: $color-true-black;
+}
+
+/* Always-visible intro line, shown before the section is expanded. */
+.intro {
+  margin: $spacing-none;
+  padding: $spacing-none;
+}
+
+/* Its arrow fills in on hover, in step with the filled trigger number. */
+.trigger:hover .arrow-icon {
+  background-color: $color-true-black;
+}
+
+/* Once the section is open the arrow has done its job. */
+.is-open .intro .arrow-icon {
+  display: none;
 }
 
 .expand-link:hover {
-  color: $color-true-black;
+  color: $color-arrow-icon-idle;
+}
+
+.expand-link:hover .arrow-icon {
+  background-color: $color-arrow-icon-idle;
 }
 
 .expandable-section .content:last-of-type a {
@@ -514,6 +605,11 @@ body.information-open .nav-info h2 .nav-link {
 
 .is-old-paragraph .expand-link:hover {
   color: $color-text-gray-light;
+}
+
+/* A superseded paragraph fades; its arrows fade with it. */
+.is-old-paragraph .arrow-icon {
+  background-color: $color-text-gray-light;
 }
 
 /* Information Overlay Styles */
@@ -809,13 +905,7 @@ body.information-open .overlay-gradient-bottom {
   text-decoration: none !important;
 }
 
-/* Use only text-decoration for underlines in content links */
+/* Content links are set without underlines. */
 .content a {
-  text-decoration: underline;
-  // text-underline-offset: -5px;
-  text-decoration-thickness: 2px;
-
-  @media (min-width: 769px) {
-    text-underline-offset: 3px;
-  }
+  text-decoration: none;
 }
