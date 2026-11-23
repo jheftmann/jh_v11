@@ -39,9 +39,10 @@ $color-text-gray-light: #D5D5D5;
 $color-arrow-icon-idle: #E1E1E1;
 /* How far the arrow circle sits below the text baseline. Negative lifts it
    above the baseline; raise toward 0 to drop the arrows back down. */
-$arrow-icon-baseline-drop: -0.131em;
-/* Diameter of the arrow circle, matched to the trigger number. */
-$arrow-icon-size: 0.807em;
+$arrow-icon-baseline-drop: 0.025em;
+/* Diameter of the arrow circle - 24px against 32px type, as the design has
+   it. Sized independently of the trigger number. */
+$arrow-icon-size: 0.75em;
 $color-true-black: #000000;
 $color-true-white: #ffffff;
 $color-background-base: #fff;
@@ -541,7 +542,7 @@ body.information-open .nav-info h2 .nav-link {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.3' stroke-linecap='butt'%3E%3Cpath d='M8 2.2V13.3'/%3E%3Cpath d='M3.2 8.5 8 13.3 12.8 8.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 52% 52%;
+  background-size: 67% 67%;
   margin-left: 0.2em;
   /* An empty inline-block takes its bottom margin edge as its baseline, so the
      circle sits on the text baseline; the variable nudges it from there. */
