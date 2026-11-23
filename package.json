@@ -7,7 +7,8 @@
     "build:sass": "sass scss/style.scss css/style.css",
     "watch:sass": "concurrently \"sass --watch scss/style.scss css/style.css\" \"nodemon --watch '*.md' --ext md --exec 'node scripts/fix-quotes.js'\"",
     "start": "concurrently \"npm run watch:sass\" \"browser-sync start --server --files '*.html, css/*.css, js/*.js'\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"sass --watch scss/style.scss css/style.css\" \"browser-sync start --server --port 3000 --no-open --no-notify --files 'index.html, css/*.css, js/*.js'\""
   },
   "repository": {
     "type": "git",

@@ -51,6 +51,15 @@ This command will:
 *   Start a local server and open your project in the browser.
 *   Automatically reload the browser when changes are detected in `.html`, `.css` (including compiled Sass), or `.js` files.
 
+`npm run dev` does the same thing but pins the server to port 3000 and does not
+open a browser tab, which is what the editor's preview pane uses.
+
+### Debug state
+
+Add `?debug` to the URL — `http://localhost:3000/?debug` — to show every content
+block expanded at once, with the type-in animation disabled. Useful for styling
+copy that is normally hidden behind a click.
+
 ## Project Structure
 
 *   `index.html`: Main HTML file.

@@ -2,10 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('Site loaded and ready!');
 
   // --- Test Mode Toggle ---
-  // Set to true to disable animations and show all content immediately for styling.
-  // Set to false for normal behavior.
-  const testMode = false;
-  // const testMode = true;
+  // Disables the animations and shows every content block immediately, for
+  // styling work. Add ?debug to the URL to turn it on, e.g. localhost:3000/?debug
+  const testMode = new URLSearchParams(window.location.search).has('debug');
   // ------------------------
 
   // Store original HTML content for all .content sections from the HTML
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const words = plainText.match(/\S+\s*/g) || [];
     element.textContent = '';
     element.hidden = false;
-    const speed = 100; // Typing speed in milliseconds per word. Bigger is slower.
+    const speed = 70; // Typing speed in milliseconds per word. Bigger is slower.
     const mobileBreakpoint = 769;
 
     function type() {

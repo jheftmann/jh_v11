@@ -36,6 +36,13 @@ body {
 
 $color-text-gray: #8A8A8A;
 $color-text-gray-light: #D5D5D5;
+$color-arrow-icon-idle: #E1E1E1;
+/* How far the arrow circle sits below the text baseline. Negative lifts it
+   above the baseline; raise toward 0 to drop the arrows back down. */
+$arrow-icon-baseline-drop: 0.025em;
+/* Diameter of the arrow circle - 24px against 32px type, as the design has
+   it. Sized independently of the trigger number. */
+$arrow-icon-size: 0.75em;
 $color-true-black: #000000;
 $color-true-white: #ffffff;
 $color-background-base: #fff;
@@ -60,6 +67,7 @@ $spacing-unit: 5px;
 $spacing-base-half: 10px;
 $spacing-base: 20px;
 $spacing-base-sm: 15px; /* Mobile spacing unit */
+$grid-gutter: 40px; /* Gutter between the two content columns */
 $spacing-double: 30px; /* Adjusted double spacing for mobile */
 $spacing-none: 0;
 
@@ -155,6 +163,9 @@ a {
 
 .trigger-number {
   font-variation-settings: "wdth" 100;
+  font-size: 0.78em;
+  position: relative;
+  top: -0.099em;
 }
 
 /* Layout - Mobile First */
@@ -256,7 +267,7 @@ span.sub-content {
     display: grid; /* Use Grid for tablet layout */
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     grid-template-rows: auto 1fr; /* Top row auto, bottom row takes remaining space */
-    gap: $spacing-base; /* Gutter between grid items */
+    gap: $grid-gutter; /* Gutter between grid items */
     flex-grow: 1;
     align-items: start; /* Reset mobile alignment */
     justify-content: start; /* Reset mobile justification */
@@ -282,9 +293,11 @@ span.sub-content {
     grid-column: 1 / span 2;
     grid-row: 2;
     align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: flex-start;
+    /* Same track geometry as .columns, so the nav items line up with the
+       columns above them whatever the gutter is. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $grid-gutter;
     width: 100%; /* Take full width */
     margin-top: 0; /* Reset mobile margin */
   }
@@ -345,9 +358,11 @@ span.sub-content {
     grid-column: 1 / span 2;
     grid-row: 2;
     align-self: end;
-    display: flex;
-    flex-direction: row; /* Ensure horizontal layout */
-    justify-content: flex-start;
+    /* Same track geometry as .columns, so the nav items line up with the
+       columns above them whatever the gutter is. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $grid-gutter;
     width: 100%; /* Take full width */
   }
 
@@ -398,7 +413,9 @@ span.sub-content {
 
 .trigger {
   cursor: pointer;
-  display: inline-block;
+  /* inline, not inline-block: the sentence must keep flowing into the
+     content that types in after it. */
+  display: inline;
 }
 
 .trigger-number-filled {
@@ -496,16 +513,82 @@ body.information-open .nav-info h2 .nav-link {
 
 .expandable-section .content a {
   color: $color-true-black;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.expandable-section .content a:hover {
+/* Keeps an arrow icon on the same line as the word it follows. The wrapper
+   and the icon stay transparent to clicks so the link itself remains the
+   event target. */
+.nowrap,
+.arrow-icon {
+  pointer-events: none;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Circular arrow icon - replaces the plain-text arrow characters in links
+   and after the always-visible intro line. The arrow is an SVG centred in the
+   circle, so its position is geometric rather than dependent on font metrics.
+   Sized in em so it tracks the responsive type scale. */
+.arrow-icon {
+  display: inline-block;
+  width: $arrow-icon-size;
+  height: $arrow-icon-size;
+  border-radius: 50%;
+  background-color: $color-arrow-icon-idle;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23ffffff' stroke-width='2.3' stroke-linecap='butt'%3E%3Cpath d='M8 2.2V13.3'/%3E%3Cpath d='M3.2 8.5 8 13.3 12.8 8.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 67% 67%;
+  margin-left: 0.2em;
+  /* An empty inline-block takes its bottom margin edge as its baseline, so the
+     circle sits on the text baseline; the variable nudges it from there. */
+  vertical-align: baseline;
+  position: relative;
+  top: $arrow-icon-baseline-drop;
+  text-indent: 0;
   text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.arrow-icon-up-right {
+  transform: rotate(-135deg);
+}
+
+.arrow-icon-up {
+  transform: rotate(180deg);
+}
+
+/* Arrows that sit inside expanded copy follow that copy: always black. */
+.expandable-section .content .arrow-icon {
+  background-color: $color-true-black;
+}
+
+/* Always-visible intro line, shown before the section is expanded. */
+.intro {
+  margin: $spacing-none;
+  padding: $spacing-none;
+}
+
+/* Its arrow fills in on hover, in step with the filled trigger number. */
+.trigger:hover .arrow-icon {
+  background-color: $color-true-black;
+}
+
+/* Once the section is open the arrow has done its job. */
+.is-open .intro .arrow-icon {
+  display: none;
 }
 
 .expand-link:hover {
-  color: $color-true-black;
+  color: $color-arrow-icon-idle;
+}
+
+.expand-link:hover .arrow-icon {
+  background-color: $color-arrow-icon-idle;
 }
 
 .expandable-section .content:last-of-type a {
@@ -514,6 +597,11 @@ body.information-open .nav-info h2 .nav-link {
 
 .is-old-paragraph .expand-link:hover {
   color: $color-text-gray-light;
+}
+
+/* A superseded paragraph fades; its arrows fade with it. */
+.is-old-paragraph .arrow-icon {
+  background-color: $color-text-gray-light;
 }
 
 /* Information Overlay Styles */
@@ -809,13 +897,7 @@ body.information-open .overlay-gradient-bottom {
   text-decoration: none !important;
 }
 
-/* Use only text-decoration for underlines in content links */
+/* Content links are set without underlines. */
 .content a {
-  text-decoration: underline;
-  // text-underline-offset: -5px;
-  text-decoration-thickness: 2px;
-
-  @media (min-width: 769px) {
-    text-underline-offset: 3px;
-  }
+  text-decoration: none;
 }
